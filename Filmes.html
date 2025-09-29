@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meus Filmes</title>
+<style>
+  /* Geral */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #000; /* fundo preto */
+    color: #fff; /* letras brancas */
+    overflow-x: hidden;
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 50px auto;
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 40px;
+    font-size: 3em;
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+  }
+
+  /* Lista de vídeos */
+  .video-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-list li {
+    margin: 15px 0;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .video-list a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    color: #fff; /* letras brancas */
+    font-size: 1.6em;
+    padding: 15px 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    transition: 0.3s;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  }
+
+  .video-list a:hover {
+    background: rgba(255,255,255,0.1);
+    color: #ffd700; /* hover dourado */
+    transform: scale(1.05);
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+  }
+
+  /* Modal do vídeo */
+  .modal {
+    display: none;
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.4s;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    height: 80%;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+    overflow: hidden;
+    background: #000;
+    animation: scaleIn 0.4s;
+  }
+
+  .modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 15px;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 10;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  }
+
+  .close-btn:hover {
+    color: #ffd700;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  @keyframes scaleIn {
+    from {transform: scale(0.7);}
+    to {transform: scale(1);}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="container">
+  <h1>Meus Filmes</h1>
+  <ul class="video-list">
+    <li><a href="#" data-video-id="1W9J1EvIbuei7YkiILt33d00-7mvmvkjB">CARROS</a></li>
+    <li><a href="#" data-video-id="1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869">CARROS 2</a></li>
+    <li><a href="#" data-video-id="1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG">CARROS 3</a></li>
+    <li><a href="#" data-video-id="1A2tHf77Gq0m9upcZhz_0C9LW0XaY5ZDM">A ERA DO GELO</a></li>
+    <li><a href="#" data-video-id="1KhUII2uqa8AvIBAMKE2WGbc0x7GbXNpr">A ERA DO GELO 2</a></li>
+    <li><a href="#" data-video-id="1SDqRYt17-d5ITPCaA2-m921MnB9Ytlq7">A ERA DO GELO 3</a></li>
+    <li><a href="#" data-video-id="1MiqOg2g2MbKRwexsa1xxF4Uxa6Y9-saJ">WALL-E</a></li>
+    <li><a href="#" data-video-id="1UB8XE4xI7dRV1z9FN6K0ByQszjTp7uiW">Monstros s.a</a></li>
+  </ul>
+</div>
+
+<div class="modal" id="videoModal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <iframe id="videoFrame" src="" allow="autoplay" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+  // Fundo com partículas brancas menores
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+
+  const particles = [];
+  const particleCount = 200;
+
+  function random(min, max){ return Math.random()*(max-min)+min; }
+
+  for(let i=0;i<particleCount;i++){
+    particles.push({
+      x: random(0,width),
+      y: random(0,height),
+      r: random(0.5,2),
+      speedX: random(-0.3,0.3),
+      speedY: random(0.3,1),
+      opacity: random(0.3,0.8)
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,width,height);
+    for(let p of particles){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
+      ctx.fill();
+    }
+    update();
+  }
+
+  function update(){
+    for(let p of particles){
+      p.x += p.speedX;
+      p.y += p.speedY;
+      if(p.x > width+5 || p.x < -5 || p.y > height){
+        p.x = random(0,width);
+        p.y = -5;
+        p.r = random(0.5,2);
+        p.speedY = random(0.3,1);
+        p.speedX = random(-0.3,0.3);
+        p.opacity = random(0.3,0.8);
+      }
+    }
+  }
+
+  setInterval(draw,30);
+
+  window.addEventListener('resize', ()=>{
+    width=canvas.width=window.innerWidth;
+    height=canvas.height=window.innerHeight;
+  });
+
+  // Modal do vídeo
+  const modal = document.getElementById('videoModal');
+  const videoFrame = document.getElementById('videoFrame');
+  const closeBtn = document.getElementById('closeBtn');
+  const links = document.querySelectorAll('.video-list a');
+
+  links.forEach(link=>{
+    link.addEventListener('click', e=>{
+      e.preventDefault();
+      const videoId = link.getAttribute('data-video-id');
+      videoFrame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+      modal.style.display = 'flex';
+    });
+  });
+
+  closeBtn.addEventListener('click', ()=>{
+    videoFrame.src = '';
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', e=>{
+    if(e.target===modal){
+      videoFrame.src = '';
+      modal.style.display='none';
+    }
+  });
+</script>
+
+</body>
+</html>

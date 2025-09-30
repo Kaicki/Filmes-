@@ -481,4 +481,38 @@
     
   </body>
   
+    <script>
+  const modal = document.getElementById('videoModal');
+  const videoFrame = document.getElementById('videoFrame');
+  const closeBtn = document.getElementById('closeBtn');
+  const cards = document.querySelectorAll('.card');
+
+  // Abrir modal ao clicar no cartaz
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const videoId = card.getAttribute('data-video-id');
+      videoFrame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+      modal.style.display = 'flex';
+    });
+  });
+
+  // Fechar modal
+  function closeModal() {
+    videoFrame.src = '';
+    modal.style.display = 'none';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+
+  window.addEventListener('click', e => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Fechar com ESC
+  window.addEventListener('keydown', e => {
+    if (e.key === "Escape") closeModal();
+  });
+</script>
+
+</body>
 </html>

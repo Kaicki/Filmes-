@@ -3,15 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moveis</title>
+<title>Movies</title>
 <style>
-  /* Geral */
+  :root {
+    --bg: #000;
+    --text: #fff;
+    --neon: #9400D3;
+  }
+
   body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #000; /* fundo preto */
-    color: #fff; /* letras brancas */
+    background: var(--bg);
+    color: var(--text);
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   canvas {
@@ -25,16 +31,22 @@
     max-width: 900px;
     margin: 50px auto;
     text-align: center;
+    padding: 0 10px;
   }
 
   h1 {
     margin-bottom: 40px;
     font-size: 3em;
-    color: #fff;
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+    color: var(--text);
+    text-shadow: 0 0 10px var(--text), 0 0 20px var(--text);
+    animation: glowPulse 2s infinite alternate;
   }
 
-  /* Lista de vídeos */
+  @keyframes glowPulse {
+    from { text-shadow: 0 0 10px var(--text), 0 0 20px var(--text); }
+    to { text-shadow: 0 0 20px var(--neon), 0 0 40px var(--neon); }
+  }
+
   .video-list {
     list-style: none;
     padding: 0;
@@ -54,23 +66,23 @@
     width: 100%;
     text-align: center;
     text-decoration: none;
-    color: #fff; /* letras brancas */
+    color: var(--text);
     font-size: 1.6em;
     padding: 15px 0;
     background: rgba(255,255,255,0.05);
     border-radius: 12px;
     transition: 0.3s;
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+    text-shadow: 0 0 5px var(--text), 0 0 10px var(--text);
   }
 
   .video-list a:hover {
     background: rgba(255,255,255,0.1);
-    color: #9400D3; /* hover dourado */
+    color: var(--neon);
     transform: scale(1.05);
-    text-shadow: 0 0 10px #9400D3, 0 0 20px #9400D3;
+    text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon);
   }
 
-  /* Modal do vídeo */
+  /* Modal */
   .modal {
     display: none;
     position: fixed;
@@ -91,7 +103,7 @@
     border-radius: 15px;
     box-shadow: 0 0 30px rgba(255,255,255,0.3);
     overflow: hidden;
-    background: #000;
+    background: var(--bg);
     animation: scaleIn 0.4s;
   }
 
@@ -107,16 +119,16 @@
     top: 10px;
     right: 15px;
     font-size: 40px;
-    color: #fff;
+    color: var(--text);
     cursor: pointer;
     transition: 0.3s;
     z-index: 10;
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+    text-shadow: 0 0 5px var(--text), 0 0 10px var(--text);
   }
 
   .close-btn:hover {
-    color: #9400D3;
-    text-shadow: 0 0 10px #9400D3, 0 0 20px #9400D3;
+    color: var(--neon);
+    text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon);
   }
 
   @keyframes fadeIn {
@@ -127,6 +139,12 @@
   @keyframes scaleIn {
     from {transform: scale(0.7);}
     to {transform: scale(1);}
+  }
+
+  /* Responsivo */
+  @media (max-width: 600px) {
+    h1 { font-size: 2em; }
+    .video-list a { font-size: 1.2em; padding: 12px 0; }
   }
 </style>
 </head>
@@ -144,25 +162,39 @@
     <li><a href="#" data-video-id="1KhUII2uqa8AvIBAMKE2WGbc0x7GbXNpr">A ERA DO GELO 2</a></li>
     <li><a href="#" data-video-id="1SDqRYt17-d5ITPCaA2-m921MnB9Ytlq7">A ERA DO GELO 3</a></li>
     <li><a href="#" data-video-id="1MiqOg2g2MbKRwexsa1xxF4Uxa6Y9-saJ">WALL-E</a></li>
-    <li><a href="#" data-video-id="1UB8XE4xI7dRV1z9FN6K0ByQszjTp7uiW">MONSTROS S.A </a></li>
-    <li><a href="#" data-video-id="1kAqZvenx25ZTe8dLoLzcze0CQta39dnf">TREINAR SEU DRAGÂO LIVE</a></li>
+    <li><a href="#" data-video-id="1UB8XE4xI7dRV1z9FN6K0ByQszjTp7uiW">MONSTROS S.A</a></li>
+    <li><a href="#" data-video-id="1kAqZvenx25ZTe8dLoLzcze0CQta39dnf">TREINAR SEU DRAGÃO LIVE</a></li>
     <li><a href="#" data-video-id="1D0csjJowIdqEMzby_Lw1thUuTwtRGlKM">PONTE PARA TERABITIA</a></li>
-    <li><a href="#" data-video-id=" 1EY7XtXNVyRcjhOD6qOlqWYM9PoO1Mpyg">BARBIE:A PRINCESA E A POP</a></li>
-    <li><a href="#" data-video-id="1FzqqQntWnAMTYFPrM5Hks9byD9oao6_h">BARBIE:ESCOLA DE PRINCESAS</a></li>
+    <li><a href="#" data-video-id="1EY7XtXNVyRcjhOD6qOlqWYM9PoO1Mpyg">BARBIE: A PRINCESA E A POP</a></li>
+    <li><a href="#" data-video-id="1FzqqQntWnAMTYFPrM5Hks9byD9oao6_h">BARBIE: ESCOLA DE PRINCESAS</a></li>
     <li><a href="#" data-video-id="1__kc1FMfND14ypIlKp7yTio58l0pLVKE">A PRINCESA E O SAPO</a></li>
     <li><a href="#" data-video-id="16wU4J9beNwBIQiwyHvgjuzNMZw9GqpUW">SHREK 4</a></li>
+    <li><a href="#" data-video-id="1SgPD-5D19e7XWNEeVGTESieejwQJVVyv">PANICO</a></li>
+     <li><a href="#" data-video-id="1oKudayXraNmTZksbW1Yu9g7GK672cmu3">PANICO 2</a></li>
+     <li><a href="#" data-video-id="1ZPy4Z6vVfdyoazBWh6_ak6JWhMQhC7Fv">PANICO 4</a></li>
+    <li><a href="#" data-video-id="132_vwYz5zXMQORAhWmTwQHlLZ47Tpu7V">A 5 PASSOS DE VOCE</a></li>
+     <li><a href="#" data-video-id="14ze444H1LYTK2Ke1sUdriALI4WTika7G">AS BEVERLY HILLS</a></li>
+    <li><a href="#" data-video-id="0B23jIx5gZY-gQ0pkQjh4UENBVm8">ENROLADOS</a></li>
+     <li><a href="#" data-video-id="12wq5D7rKLD58H3iJPPen0_WcClJQbgt0">REI LEÃO</a></li>
+     <li><a href="#" data-video-id="0B01Bil6Bc7xdYlR3UmZZZWJtaTg">TOY STORY</a></li>
+    <li><a href="#" data-video-id="1STn-2kVdCZABpk720gMwgyNCoLs4wTEh">TOY STORY 2</a></li>
+   <li><a href="#" data-video-id="0B01Bil6Bc7xdaEFSc21aVkxnaTA">TOY STORY 3</a></li>
+    <li><a href="#" data-video-id="1zcYKgzbh0adWyEIe5Y1BaAiuKnfp-g9t">UP ALTAS AVENTURAS</a></li>
+     <li><a href="#" data-video-id="1qFJgLbD2yckD3tXwgekhbtQ02z5oOEaz">VIAGEM AO CENTRO</a></li>
+    <li><a href="#" data-video-id="1JgxLGhwwPH5vvZJIM7JGH56A-KNSYqYp">VIAGEM 2</a></li>
+     <li><a href="#" data-video-id="1JgxLGhwwPH5vvZJIM7JGH56A-KNSYqYp">VIAGEM 2</a></li>
   </ul>
 </div>
 
 <div class="modal" id="videoModal">
   <div class="modal-content">
-    <span class="close-btn" id="closeBtn">&times;</span>
+    <span class="close-btn" id="closeBtn" aria-label="Fechar vídeo">&times;</span>
     <iframe id="videoFrame" src="" allow="autoplay" allowfullscreen></iframe>
   </div>
 </div>
 
 <script>
-  // Fundo com partículas brancas menores
+  // Fundo com partículas
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
   let width = canvas.width = window.innerWidth;
@@ -193,6 +225,7 @@
       ctx.fill();
     }
     update();
+    requestAnimationFrame(draw);
   }
 
   function update(){
@@ -210,14 +243,14 @@
     }
   }
 
-  setInterval(draw,30);
+  requestAnimationFrame(draw);
 
   window.addEventListener('resize', ()=>{
     width=canvas.width=window.innerWidth;
     height=canvas.height=window.innerHeight;
   });
 
-  // Modal do vídeo
+  // Modal
   const modal = document.getElementById('videoModal');
   const videoFrame = document.getElementById('videoFrame');
   const closeBtn = document.getElementById('closeBtn');
@@ -226,22 +259,26 @@
   links.forEach(link=>{
     link.addEventListener('click', e=>{
       e.preventDefault();
-      const videoId = link.getAttribute('data-video-id');
+      const videoId = link.getAttribute('data-video-id').trim();
       videoFrame.src = `https://drive.google.com/file/d/${videoId}/preview`;
       modal.style.display = 'flex';
     });
   });
 
-  closeBtn.addEventListener('click', ()=>{
+  function closeModal(){
     videoFrame.src = '';
     modal.style.display = 'none';
-  });
+  }
+
+  closeBtn.addEventListener('click', closeModal);
 
   window.addEventListener('click', e=>{
-    if(e.target===modal){
-      videoFrame.src = '';
-      modal.style.display='none';
-    }
+    if(e.target===modal) closeModal();
+  });
+
+  // Fechar com ESC
+  window.addEventListener('keydown', e=>{
+    if(e.key === "Escape") closeModal();
   });
 </script>
 

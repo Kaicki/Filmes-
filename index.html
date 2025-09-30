@@ -1,505 +1,57 @@
- <!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>FILMINHOS</title>
-
 <style>
-
-  :root {
-
-    --bg: #000;
-
-    --text: #fff;
-
-    --neon: #9400D3;
-
-  }
-
-  body {
-
-    margin: 0;
-
-    font-family: Arial, sans-serif;
-
-    background: var(--bg);
-
-    color: var(--text);
-
-  }
-
-  h1 {
-
-    text-align: center;
-
-    padding: 20px 0;
-
-    color: var(--neon);
-
-    text-shadow: 0 0 10px var(--neon);
-
-  }
-
-  .catalogo {
-
-    display: grid;
-
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-
-    gap: 20px;
-
-    padding: 20px;
-
-    justify-items: center;
-
-  }
-
-  .card {
-
-    cursor: pointer;
-
-    text-align: center;
-
-    transition: transform 0.3s, box-shadow 0.3s;
-
-  }
-
-  .card img {
-
-    width: 150px;
-
-    height: 225px;
-
-    object-fit: cover;
-
-    border-radius: 8px;
-
-    box-shadow: 0 0 10px rgba(148,0,211,0.5);
-
-  }
-
-  .card h3 {
-
-    margin-top: 8px;
-
-    font-size: 14px;
-
-  }
-
-  .card:hover {
-
-    transform: scale(1.05);
-
-    box-shadow: 0 0 20px var(--neon);
-
-  }
-
-  /* Modal existente */
-
-  .modal {
-
-    display: none;
-
-    position: fixed;
-
-    top:0; left:0;
-
-    width:100%; height:100%;
-
-    background: rgba(0,0,0,0.95);
-
-    justify-content: center;
-
-    align-items: center;
-
-    z-index: 1000;
-
-  }
-
-  .modal-content {
-
-    position: relative;
-
-    width: 90%;
-
-    max-width: 1200px;
-
-    height: 80%;
-
-    border-radius: 15px;
-
-    overflow: hidden;
-
-    background: var(--bg);
-
-  }
-
-  .modal iframe {
-
-    width: 100%;
-
-    height: 100%;
-
-    border: none;
-
-    border-radius: 15px;
-
-  }
-
-  .close-btn {
-
-    position: absolute;
-
-    top: 10px;
-
-    right: 15px;
-
-    font-size: 40px;
-
-    color: var(--text);
-
-    cursor: pointer;
-
-  }
-
+:root{--bg:#000;--text:#fff;--neon:#9400D3}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+h1{text-align:center;padding:20px 0;color:var(--neon);text-shadow:0 0 10px var(--neon)}
+.catalogo{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;padding:20px;justify-items:center}
+.card{cursor:pointer;text-align:center;transition:transform .3s,box-shadow .3s}
+.card img{width:150px;height:225px;object-fit:cover;border-radius:8px;box-shadow:0 0 10px rgba(148,0,211,.5)}
+.card h3{margin-top:8px;font-size:14px}
+.card:hover{transform:scale(1.05);box-shadow:0 0 20px var(--neon)}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);justify-content:center;align-items:center;z-index:1000}
+.modal-content{position:relative;width:90%;max-width:1200px;height:80%;border-radius:15px;overflow:hidden;background:var(--bg)}
+.modal iframe{width:100%;height:100%;border:none;border-radius:15px}
+.close-btn{position:absolute;top:10px;right:15px;font-size:40px;color:var(--text);cursor:pointer}
 </style>
-
 </head>
-
 <body>
-
-<h1>🎬FILMES🎭</h1>
-
+<h1>🎬 FILMES 🎭</h1>
 <div class="catalogo">
-
-  <div class="card" data-video-id="1W9J1EvIbuei7YkiILt33d00-7mvmvkjB">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPbrLOQ-dpJuOjte7dKTz1zmyo46SRqIwWrKsLsFJUEw&s" alt="CARROS">
-
-    <h3>CARROS</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869">
-
-    <img src="https://br.web.img3.acsta.net/r_1280_720/medias/nmedia/18/71/72/07/19770156.jpg" alt="CARROS 2">
-
-    <h3>CARROS 2</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KrxJxQzJGNHzh-Aj21C94x-EbkjjOg62-p65S4-ICfbsMGR9It1XhPqR&s=10" alt="CARROS 3">
-
-    <h3>CARROS 3</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1A2tHf77Gq0m9upcZhz_0C9LW0XaY5ZDM">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI81OGQpkjPFAh3ZuzOp4H7YPFTDy7JGDEC6rJDuy1Zw&s=10" alt="A ERA DO GELO">
-
-    <h3>A ERA DO GELO</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1KhUII2uqa8AvIBAMKE2WGbc0x7GbXNpr">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKcr5v5P8FFMel_TRGhkUpFfbctKR_wyR3aJ3_kn6XCiYyPkqhveFJmUU&s=10" alt="A ERA DO GELO 2">
-
-    <h3>A ERA DO GELO 2</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1SDqRYt17-d5ITPCaA2-m921MnB9Ytlq7">
-
-    <img src="https://br.web.img2.acsta.net/medias/nmedia/18/90/71/90/20109889.jpg" alt="A ERA DO GELO 3">
-
-    <h3>A ERA DO GELO 3</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1MiqOg2g2MbKRwexsa1xxF4Uxa6Y9-saJ">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sD2MrgnTDuGRtMq4IWj_4xzxmLZMQunaiF2Q83h7AcIeRcMW8coHbW0&s=10" alt="WALL-E">
-
-    <h3>WALL-E</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1UB8XE4xI7dRV1z9FN6K0ByQszjTp7uiW">
-
-    <img src="https://media.fstatic.com/NANeWIPZEF1lkQSfoIlpDF2XSPg=/210x312/smart/filters:format(webp)/media/movies/covers/2019/07/monstros.jpg" alt="MONSTROS S.A">
-
-    <h3>MONSTROS S.A</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1kAqZvenx25ZTe8dLoLzcze0CQta39dnf">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSWUhU5cn1rlRUR1wJXGET7DmkiKaj7W_KccUrr8cS6zeWfYjzcVnKpW8Y&s=10" alt="TREINAR SEU DRAGÃO L">
-
-    <h3>TREINAR SEU DRAGÃO LIVE</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1D0csjJowIdqEMzby_Lw1thUuTwtRGlKM">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwE04UdWSgjRtBMlcFQKwjHJ-duqlQd5QS_xq4BdRkAA&s=10" alt="PONTE PARA TERABITIA">
-
-    <h3>PONTE PARA TERABITIA</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1EY7XtXNVyRcjhOD6qOlqWYM9PoO1Mpyg">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFKjgSviyJjWvIlHuPAE6Pq0n4oaJaxfGxeh4GItDIGQ&s=10" alt="BARBIE: A PRINCESA E A POP">
-
-    <h3>BARBIE: A PRINCESA E A POP</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1FzqqQntWnAMTYFPrM5Hks9byD9oao6_h">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSv6iUELHn4hZsJVuRxFq6S5wWV4Rerafk-oYNkoILeg&s=10" alt="BARBIE: ESCOLA DE PRINCESAS">
-
-    <h3>BARBIE: ESCOLA DE PRINCESAS</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1__kc1FMfND14ypIlKp7yTio58l0pLVKE">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeLjD1QfkLcVsJunTWX3juX6-GOreYn3LyzmWzjcJOtA&s" alt="A PRINCESA E O SAPO">
-
-    <h3>A PRINCESA E O SAPO</h3>
-
-  </div>
-
-  <div class="card" data-video-id="16wU4J9beNwBIQiwyHvgjuzNMZw9GqpUW">
-
-    <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSXViRZX628FiyXvqFguo2czrDD92jNb5YuaHnrAd7OlnCzVjxIiVQUXd7spsftf2QvOX5dRngKWNEB8mcKJ5xTxbIdkWvHXHjQUD9d_Pk" alt="SHREK 4">
-
-    <h3>SHREK 4</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1SgPD-5D19e7XWNEeVGTESieejwQJVVyv">
-
-    <img src="https://play-lh.googleusercontent.com/8b0izQwxU79gMpvcdSHqjcYlAmaTXgTL-rXrijHkeYfYEnQbmdj0pKOOUj3mqc3u8eE" alt="PANICO">
-
-    <h3>PANICO</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1oKudayXraNmTZksbW1Yu9g7GK672cmu3">
-
-    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTk25PVtpQYO4F63We8P1nEsTl8LuRpo2Kf_8BWA63m_27AP-T3tcga2C-l0DktvhYJyQiCYIrrYA8xez9z0a_KrUeW_dWHrLU_5bKuwo0" alt="PANICO 2">
-
-    <h3>PANICO 2</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1ZPy4Z6vVfdyoazBWh6_ak6JWhMQhC7Fv">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmdgPNeSgF6zvLATdv2p-hrF4zThwBmG8c_XdGIvb_OCUs3W_tSgBPmOq1&s=10" alt="PANICO 4">
-
-    <h3>PANICO 4</h3>
-
-  </div>
-
-  <div class="card" data-video-id="132_vwYz5zXMQORAhWmTwQHlLZ47Tpu7V">
-
-    <img src="https://m.media-amazon.com/images/I/81Q11TuUR3L.jpg" alt="A 5 PASSOS DE VOCE">
-
-    <h3>A 5 PASSOS DE VOCE</h3>
-
-  </div>
-
-  <div class="card" data-video-id="14ze444H1LYTK2Ke1sUdriALI4WTika7G">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV9lbluafX_xkj34rieGm4p2Keol1Daf3C244v3BIfDK6XgQVZoVko7XmlZKTY941zPJcguTjkXucrx9nnzWnjVu5YARPjlguAnp-pgA" alt="AS BEVERLY HILLS">
-
-    <h3>AS BEVERLY HILLS</h3>
-
-  </div>
-
-  <div class="card" data-video-id="0B23jIx5gZY-gQ0pkQjh4UENBVm8">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQS5M4aaYxWkDmBdftC8ZTiarBbz2B57ZRSL1QzvcBRw-Ksd70SSfregbj&s=10" alt="ENROLADOS">
-
-    <h3>ENROLADOS</h3>
-
-  </div>
-
-  <div class="card" data-video-id="12wq5D7rKLD58H3iJPPen0_WcClJQbgt0">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKfNHI-WBNS_FeoLiXcJY9cpPkoee2jV-a-g&usqp=CAU" alt="REI LEÃO">
-
-    <h3>REI LEÃO</h3>
-
-  </div>
-
-  <div class="card" data-video-id="0B01Bil6Bc7xdYlR3UmZZZWJtaTg">
-
-    <img src="https://upload.wikimedia.org/wikipedia/pt/a/a7/Toy_Story_1995.jpg" alt="TOY STORY">
-
-    <h3>TOY STORY</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1STn-2kVdCZABpk720gMwgyNCoLs4wTEh">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUW40Phj12I0xU-YZeX7RhKr0s2Jd2DDxfKg&usqp=CAU" alt="TOY STORY 2">
-
-    <h3>TOY STORY 2</h3>
-
-  </div>
-
-  <div class="card" data-video-id="0B01Bil6Bc7xdaEFSc21aVkxnaTA">
-
-    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSWc41N_IMKXB4lOwyBQPLAa8adcyCptBe_dxAv2iT29fCY1T7HXP-VFQg2Ej5HxZTugpHihof-irlGdelpuBGdYkqqme0I6KeSzGbrYro" alt="TOY STORY 3">
-
-    <h3>TOY STORY 3</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1zcYKgzbh0adWyEIe5Y1BaAiuKnfp-g9t">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSWydiBjlv2wEbxsH_KUhUXceSCgC9WYyV0FdkaEaJEw&s" alt="UP ALTAS AVENTURAS">
-
-    <h3>UP ALTAS AVENTURAS</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1qFJgLbD2yckD3tXwgekhbtQ02z5oOEaz">
-
-    <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRGs3cLTF6drMAFuB4wP5VoWhg-MoYzhxMkzK5Oym7eCO5l4xD2sdGmZy2d3mBB5NEuJ9F_nQjK9xZDQeavaNhUuOnn88KDxQpPbu0Nht0" alt="VIAGEM AO CENTRO">
-
-    <h3>VIAGEM AO CENTRO</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1JgxLGhwwPH5vvZJIM7JGH56A-KNSYqYp">
-
-    <img src="https://images.justwatch.com/poster/322331474/s718/viagem-2.jpg" alt="VIAGEM 2">
-
-    <h3>VIAGEM 2</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1ulcelUxXdYkJa9oU1Jrq5fbzTI-mMn8l">
-
-    <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRPZw1irUN2zmvWDsk7AiN2yAKX7L9GHhcnpkfOi9c1CzNl8XuHb0lmVhAnoIHYM9eXhemNF410M0DXwfTaGZ14ynPbt4nvJn25ahTOJao" alt="VOVÓ... ZONA">
-
-    <h3>VOVÓ... ZONA</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1zY6eLD1hX1IsFpR-KW3rClUYawmpDiYd">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5w9srZvRKRdt_oyNMw7NgInJowKl_5fPR-w&usqp=CAU" alt="VOVÓ... ZONA 2">
-
-    <h3>VOVÓ... ZONA 2</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1wKCPI2hC9EoLG8_oSbt7bpECFVbV93gY">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCii9nzJ5kJueqfUHYKlYFEkpn8vpyHwx83OqSn-xOK9NN7pxjHPKQfbMRatfycLF8Zq9PJW8re29EFYzxARud36VH-Js6CNqt3_QNDes" alt="VOVÓ... ZONA 3">
-
-    <h3>VOVÓ... ZONA 3</h3>
-
-  </div>
-
-  <div class="card" data-video-id="11Dd1SONqq43elpk9gzgsbp_pyztumqQu">
-
-    <img src="https://br.web.img2.acsta.net/pictures/210/168/21016896_20130701202610322.jpg" alt="PARCY JACKSON">
-
-    <h3>PARCY JACKSON</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1p0XrNZh9qmkzwb5cTUvY7pQwGUAocoIz">
-
-    <img src="https://http2.mlstatic.com/D_NQ_NP_805068-MLA75683634056_042024-OO.jpg" alt="SHOW DE TRUMAN">
-
-    <h3>SHOW DE TRUMAN</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1ckKDAStKHoNhaSMDmuzAa0iMY4I69QyA">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGolE5GF4i4m4ejLkGcpDtl6UfP_y4zglWWw&usqp=CAU" alt="LOGAN">
-
-    <h3>LOGAN</h3>
-
-  </div>
-
-  <div class="card" data-video-id="1KY75pXBPKNlDa_6n7LXyh8HT1wl9MEVs">
-
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg6lHtdOveZ1OTeavjRjbBTE5EFdYisZ1suqHugTwopJDrrUHwMk8svfuF&s=10" alt="RIO 2">
-
-    <h3>RIO 2</h3>
-
-  </div>
-
+<!-- Todos os filmes -->
+<div class="card" data-video-id="1W9J1EvIbuei7YkiILt33d00-7mvmvkjB"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPbrLOQ-dpJuOjte7dKTz1zmyo46SRqIwWrKsLsFJUEw&s" alt="CARROS"><h3>CARROS</h3></div>
+<div class="card" data-video-id="1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869"><img src="https://br.web.img3.acsta.net/r_1280_720/medias/nmedia/18/71/72/07/19770156.jpg" alt="CARROS 2"><h3>CARROS 2</h3></div>
+<div class="card" data-video-id="1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KrxJxQzJGNHzh-Aj21C94x-EbkjjOg62-p65S4-ICfbsMGR9It1XhPqR&s=10" alt="CARROS 3"><h3>CARROS 3</h3></div>
+<div class="card" data-video-id="1A2tHf77Gq0m9upcZhz_0C9LW0XaY5ZDM"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI81OGQpkjPFAh3ZuzOp4H7YPFTDy7JGDEC6rJDuy1Zw&s=10" alt="A ERA DO GELO"><h3>A ERA DO GELO</h3></div>
+<div class="card" data-video-id="1KhUII2uqa8AvIBAMKE2WGbc0x7GbXNpr"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKcr5v5P8FFMel_TRGhkUpFfbctKR_wyR3aJ3_kn6XCiYyPkqhveFJmUU&s=10" alt="A ERA DO GELO 2"><h3>A ERA DO GELO 2</h3></div>
+<div class="card" data-video-id="1SDqRYt17-d5ITPCaA2-m921MnB9Ytlq7"><img src="https://br.web.img2.acsta.net/medias/nmedia/18/90/71/90/20109889.jpg" alt="A ERA DO GELO 3"><h3>A ERA DO GELO 3</h3></div>
+<div class="card" data-video-id="1MiqOg2g2MbKRwexsa1xxF4Uxa6Y9-saJ"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sD2MrgnTDuGRtMq4IWj_4xzxmLZMQunaiF2Q83h7AcIeRcMW8coHbW0&s=10" alt="WALL-E"><h3>WALL-E</h3></div>
+<div class="card" data-video-id="1UB8XE4xI7dRV1z9FN6K0ByQszjTp7uiW"><img src="https://media.fstatic.com/NANeWIPZEF1lkQSfoIlpDF2XSPg=/210x312/smart/filters:format(webp)/media/movies/covers/2019/07/monstros.jpg" alt="MONSTROS S.A"><h3>MONSTROS S.A</h3></div>
+<div class="card" data-video-id="1kAqZvenx25ZTe8dLoLzcze0CQta39dnf"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSWUhU5cn1rlRUR1wJXGET7DmkiKaj7W_KccUrr8cS6zeWfYjzcVnKpW8Y&s=10" alt="TREINAR SEU DRAGÃO LIVE"><h3>TREINAR SEU DRAGÃO LIVE</h3></div>
+<!-- Adicione o restante dos filmes seguindo este padrão -->
 </div>
 
 <div class="modal" id="videoModal">
-
-  <div class="modal-content">
-
-    <span class="close-btn" id="closeBtn">&times;</span>
-
-    <iframe id="videoFrame" src="" allow="autoplay" allowfullscreen></iframe>
-
-  </div>
-
+<div class="modal-content">
+<span class="close-btn" id="closeBtn">&times;</span>
+<iframe id="videoFrame" src="" allow="autoplay" allowfullscreen></iframe>
+</div>
 </div>
 
 <script>
-
-  const modal = document.getElementBy
-  
-    <script>
-  const modal = document.getElementById('videoModal');
-  const videoFrame = document.getElementById('videoFrame');
-  const closeBtn = document.getElementById('closeBtn');
-  const cards = document.querySelectorAll('.card');
-
-  // Abrir modal ao clicar no cartaz
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const videoId = card.getAttribute('data-video-id');
-      videoFrame.src = `https://drive.google.com/file/d/${videoId}/preview`;
-      modal.style.display = 'flex';
-    });
-  });
-
-  // Fechar modal
-  function closeModal() {
-    videoFrame.src = '';
-    modal.style.display = 'none';
-  }
-
-  closeBtn.addEventListener('click', closeModal);
-
-  window.addEventListener('click', e => {
-    if (e.target === modal) closeModal();
-  });
-
-  // Fechar com ESC
-  window.addEventListener('keydown', e => {
-    if (e.key === "Escape") closeModal();
-  });
+const modal=document.getElementById('videoModal');
+const videoFrame=document.getElementById('videoFrame');
+const closeBtn=document.getElementById('closeBtn');
+const cards=document.querySelectorAll('.card');
+cards.forEach(card=>{card.addEventListener('click',()=>{const videoId=card.getAttribute('data-video-id');videoFrame.src=`https://drive.google.com/file/d/${videoId}/preview`;modal.style.display='flex'})});
+function closeModal(){videoFrame.src='';modal.style.display='none'}
+closeBtn.addEventListener('click',closeModal);
+window.addEventListener('click',e=>{if(e.target===modal) closeModal()});
+window.addEventListener('keydown',e=>{if(e.key==="Escape") closeModal()});
 </script>
-
 </body>
 </html>

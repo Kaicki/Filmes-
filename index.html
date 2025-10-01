@@ -5,33 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CineMax</title>
   <style>
+    /* Tema Padrão (Escuro) */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #111;
+      background: #000;
       color: #fff;
+      transition: background 0.3s, color 0.3s;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px 20px;
-      background: #222;
+      background: #000;
       position: sticky;
       top: 0;
       z-index: 1000;
+      border-bottom: 1px solid #222;
     }
     .logo { font-size: 24px; font-weight: bold; color: #f00; }
-    .search-container {
-      display: flex;
-      gap: 10px;
-    }
+    .search-container { display: flex; gap: 10px; }
     .search-container input {
       padding: 5px;
       border-radius: 4px;
       border: none;
     }
-    .search-container button {
+    .search-container button, .controls button, .sidebar button, .theme-toggle {
       padding: 5px 10px;
       border: none;
       border-radius: 4px;
@@ -40,13 +40,12 @@
       cursor: pointer;
     }
     .menu-toggle { cursor: pointer; font-size: 20px; }
+    .theme-toggle { margin-left: 15px; }
     .sidebar {
       position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background: #333;
+      top: 0; left: -250px;
+      width: 250px; height: 100%;
+      background: #111;
       transition: left 0.3s;
       padding: 20px;
       z-index: 1100;
@@ -56,8 +55,7 @@
     .sidebar ul { list-style: none; padding: 0; }
     .sidebar ul li { padding: 10px 0; cursor: pointer; }
     .overlay {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.7);
       display: none;
@@ -66,22 +64,14 @@
     .overlay.active { display: block; }
     main { padding: 20px; }
     .controls { margin-bottom: 15px; }
-    .controls button {
-      margin-right: 10px;
-      padding: 5px 10px;
-      border: none;
-      border-radius: 4px;
-      background: #f00;
-      color: #fff;
-      cursor: pointer;
-    }
+    .controls button { margin-right: 10px; }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
       gap: 15px;
     }
     .card {
-      background: #222;
+      background: #111;
       border-radius: 8px;
       overflow: hidden;
       cursor: pointer;
@@ -96,7 +86,7 @@
       z-index: 1200;
       left: 0; top: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
       justify-content: center;
       align-items: center;
     }
@@ -107,6 +97,17 @@
       position: absolute; top: -30px; right: 0;
       font-size: 30px; color: #fff; cursor: pointer;
     }
+
+    /* Tema Claro */
+    body.light {
+      background: #f5f5f5;
+      color: #000;
+    }
+    body.light header { background: #fff; border-bottom: 1px solid #ddd; }
+    body.light .sidebar { background: #fff; color: #000; }
+    body.light .card { background: #fff; color: #000; border: 1px solid #ddd; }
+    body.light .modal { background: rgba(255,255,255,0.95); }
+    body.light .close { color: #000; }
   </style>
 </head>
 <body>
@@ -116,6 +117,7 @@
     <div class="search-container">
       <input type="text" id="searchInput" placeholder="Buscar filmes...">
       <button id="searchBtn">Buscar</button>
+      <button class="theme-toggle" id="themeToggle">🌙</button>
     </div>
   </header>
 
@@ -127,6 +129,8 @@
       <li data-genre="animacao">Animação</li>
       <li data-genre="comedia">Comédia</li>
       <li data-genre="drama">Drama</li>
+      <li data-genre="terror">Terror</li>
+      <li data-genre="ficcao">Ficção</li>
     </ul>
     <button id="closeSidebar">Fechar</button>
   </div>
@@ -138,7 +142,7 @@
       <button id="sortZA">Ordenar Z-A</button>
     </div>
     <div class="grid" id="movieGrid">
-      <!-- Cards -->
+      <!-- Exemplos de filmes -->
       <div class="card" data-title="Carros" data-genre="animacao" data-video="carros.mp4">
         <img src="https://via.placeholder.com/200x300?text=Carros" alt="Carros">
         <div class="card-title">Carros</div>
@@ -158,6 +162,14 @@
       <div class="card" data-title="Titanic" data-genre="drama" data-video="titanic.mp4">
         <img src="https://via.placeholder.com/200x300?text=Titanic" alt="Titanic">
         <div class="card-title">Titanic</div>
+      </div>
+      <div class="card" data-title="Invocação do Mal" data-genre="terror" data-video="invocacao.mp4">
+        <img src="https://via.placeholder.com/200x300?text=Invocacao" alt="Invocação do Mal">
+        <div class="card-title">Invocação do Mal</div>
+      </div>
+      <div class="card" data-title="Interestelar" data-genre="ficcao" data-video="interestelar.mp4">
+        <img src="https://via.placeholder.com/200x300?text=Interestelar" alt="Interestelar">
+        <div class="card-title">Interestelar</div>
       </div>
     </div>
   </main>
@@ -184,6 +196,7 @@
       const modal = document.getElementById("modal");
       const modalVideo = document.getElementById("modalVideo");
       const modalClose = modal.querySelector(".close");
+      const themeToggle = document.getElementById("themeToggle");
 
       // Abrir modal
       movieGrid.addEventListener("click", (e) => {
@@ -253,6 +266,12 @@
           });
           closeSide();
         });
+      });
+
+      // Alternar Tema
+      themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("light");
+        themeToggle.textContent = document.body.classList.contains("light") ? "🌞" : "🌙";
       });
     });
   </script>

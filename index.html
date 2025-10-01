@@ -1,239 +1,324 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Filmes</title>
-  <style>
-    body {
-      background:#111; 
-      color:#fff; 
-      font-family:Arial, sans-serif; 
-      margin:0;
-    }
-    header {
-      background:#222; 
-      padding:15px; 
-      text-align:center; 
-      color:#f39c12; 
-      font-size:24px; 
-      font-weight:bold;
-    }
-    header input, header select {
-      margin-top:10px;
-      padding:8px;
-      width:80%;
-      max-width:400px;
-      border-radius:5px;
-      border:none;
-      font-size:14px;
-    }
-    header select {
-      width:auto;
-      margin-left:5px;
-    }
-    .grid {
-      display:grid; 
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); 
-      gap:20px; 
-      padding:20px;
-    }
-    .card {
-      background:#222; 
-      border-radius:10px; 
-      overflow:hidden; 
-      cursor:pointer; 
-      transition:transform 0.2s ease;
-    }
-    .card:hover {
-      transform:scale(1.05);
-    }
-    .card img {
-      width:100%; 
-      display:block;
-    }
-    .card-title {
-      padding:10px; 
-      text-align:center; 
-      font-size:16px; 
-      font-weight:bold;
-    }
-    /* Modal */
-    .modal {
-      display:none; 
-      position:fixed; 
-      top:0; left:0; 
-      width:100%; height:100%; 
-      background:rgba(0,0,0,0.8); 
-      align-items:center; 
-      justify-content:center; 
-      z-index:100;
-    }
-    .modal-content {
-      width:80%; 
-      max-width:900px; 
-      background:#000; 
-      padding:20px; 
-      border-radius:10px; 
-      position:relative;
-    }
-    .modal iframe {
-      width:100%; 
-      height:500px; 
-      border:none; 
-      border-radius:10px;
-    }
-    .close {
-      position:absolute; 
-      top:15px; right:25px; 
-      font-size:28px; 
-      color:#fff; 
-      cursor:pointer;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    🎬 Catálogo de Filmes
-    <br>
-    <input type="text" id="searchInput" placeholder="Pesquisar filme...">
-    <select id="sortSelect">
-      <option value="az">A → Z</option>
-      <option value="za">Z → A</option>
-    </select>
-  </header>
 
-  <main class="grid" id="movieGrid">
-    
-    <div class="card" data-video-id="1W9J1EvIbuei7YkiILt33d00-7mvmvkjB"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPbrLOQ-dpJuOjte7dKTz1zmyo46SRqIwWrKsLsFJUEw&s" alt="CARROS"><h3>CARROS</h3></div>
-<div class="card" data-video-id="1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869"><img src="https://br.web.img3.acsta.net/r_1280_720/medias/nmedia/18/71/72/07/19770156.jpg" alt="CARROS 2"><h3>CARROS 2</h3></div>
-<div class="card" data-video-id="1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KrxJxQzJGNHzh-Aj21C94x-EbkjjOg62-p65S4-ICfbsMGR9It1XhPqR&s=10" alt="CARROS 3"><h3>CARROS 3</h3></div>
-<div class="card" data-video-id="1A2tHf77Gq0m9upcZhz_0C9LW0XaY5ZDM"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI81OGQpkjPFAh3ZuzOp4H7YPFTDy7JGDEC6rJDuy1Zw&s=10" alt="A ERA DO GELO"><h3>A ERA DO GELO</h3></div>
-<div class="card" data-video-id="1KhUII2uqa8AvIBAMKE2WGbc0x7GbXNpr"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKcr5v5P8FFMel_TRGhkUpFfbctKR_wyR3aJ3_kn6XCiYyPkqhveFJmUU&s=10" alt="A ERA DO GELO 2"><h3>A ERA DO GELO 2</h3></div>
-<div class="card" data-video-id="1SDqRYt17-d5ITPCaA2-m921MnB9Ytlq7"><img src="https://br.web.img2.acsta.net/medias/nmedia/18/90/71/90/20109889.jpg" alt="A ERA DO GELO 3"><h3>A ERA DO GELO 3</h3></div>
-<div class="card" data-video-id="1MiqOg2g2MbKRwexsa1xxF4Uxa6Y9-saJ"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sD2MrgnTDuGRtMq4IWj_4xzxmLZMQunaiF2Q83h7AcIeRcMW8coHbW0&s=10" alt="WALL-E"><h3>WALL-E</h3></div>
-<div class="card" data-video-id="1UB8XE4xI7dRV1z9FN6K0ByQszjTp7uiW"><img src="https://media.fstatic.com/NANeWIPZEF1lkQSfoIlpDF2XSPg=/210x312/smart/filters:format(webp)/media/movies/covers/2019/07/monstros.jpg" alt="MONSTROS S.A"><h3>MONSTROS S.A</h3></div>
-<div class="card" data-video-id="1kAqZvenx25ZTe8dLoLzcze0CQta39dnf"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSWUhU5cn1rlRUR1wJXGET7DmkiKaj7W_KccUrr8cS6zeWfYjzcVnKpW8Y&s=10" alt="TREINAR SEU DRAGÃO LIVE"><h3>TREINAR SEU DRAGÃO LIVE</h3></div>
-<div class="card" data-video-id="1D0csjJowIdqEMzby_Lw1thUuTwtRGlKM"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwE04UdWSgjRtBMlcFQKwjHJ-duqlQd5QS_xq4BdRkAA&s=10" alt="PONTE PARA TERABITIA"><h3>PONTE PARA TERABITIA</h3></div>
-<div class="card" data-video-id="1EY7XtXNVyRcjhOD6qOlqWYM9PoO1Mpyg"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFKjgSviyJjWvIlHuPAE6Pq0n4oaJaxfGxeh4GItDIGQ&s=10" alt="BARBIE: A PRINCESA E A POP"><h3>BARBIE: A PRINCESA E A POP</h3></div>
-<div class="card" data-video-id="1FzqqQntWnAMTYFPrM5Hks9byD9oao6_h"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSv6iUELHn4hZsJVuRxFq6S5wWV4Rerafk-oYNkoILeg&s=10" alt="BARBIE: ESCOLA DE PRINCESAS"><h3>BARBIE: ESCOLA DE PRINCESAS</h3></div>
-<div class="card" data-video-id="1__kc1FMfND14ypIlKp7yTio58l0pLVKE"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeLjD1QfkLcVsJunTWX3juX6-GOreYn3LyzmWzjcJOtA&s" alt="A PRINCESA E O SAPO"><h3>A PRINCESA E O SAPO</h3></div>
-<div class="card" data-video-id="16wU4J9beNwBIQiwyHvgjuzNMZw9GqpUW"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSXViRZX628FiyXvqFguo2czrDD92jNb5YuaHnrAd7OlnCzVjxIiVQUXd7spsftf2QvOX5dRngKWNEB8mcKJ5xTxbIdkWvHXHjQUD9d_Pk" alt="SHREK 4"><h3>SHREK 4</h3></div>
-<div class="card" data-video-id="1SgPD-5D19e7XWNEeVGTESieejwQJVVyv"><img src="https://play-lh.googleusercontent.com/8b0izQwxU79gMpvcdSHqjcYlAmaTXgTL-rXrijHkeYfYEnQbmdj0pKOOUj3mqc3u8eE" alt="PANICO"><h3>PANICO</h3></div>
-<div class="card" data-video-id="1oKudayXraNmTZksbW1Yu9g7GK672cmu3"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTk25PVtpQYO4F63We8P1nEsTl8LuRpo2Kf_8BWA63m_27AP-T3tcga2C-l0DktvhYJyQiCYIrrYA8xez9z0a_KrUeW_dWHrLU_5bKuwo0" alt="PANICO 2"><h3>PANICO 2</h3></div>
-<div class="card" data-video-id="1ZPy4Z6vVfdyoazBWh6_ak6JWhMQhC7Fv"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmdgPNeSgF6zvLATdv2p-hrF4zThwBmG8c_XdGIvb_OCUs3W_tSgBPmOq1&s=10" alt="PANICO 4"><h3>PANICO 4</h3></div>
-<div class="card" data-video-id="132_vwYz5zXMQORAhWmTwQHlLZ47Tpu7V"><img src="https://m.media-amazon.com/images/I/81Q11TuUR3L.jpg" alt="A 5 PASSOS DE VOCE"><h3>A 5 PASSOS DE VOCE</h3></div>
-<div class="card" data-video-id="14ze444H1LYTK2Ke1sUdriALI4WTika7G"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV9lbluafX_xkj34rieGm4p2Keol1Daf3C244v3BIfDK6XgQVZoVko7XmlZKTY941zPJcguTjkXucrx9nnzWnjVu5YARPjlguAnp-pgA" alt="AS BEVERLY HILLS"><h3>AS BEVERLY HILLS</h3></div>
-<div class="card" data-video-id="0B23jIx5gZY-gQ0pkQjh4UENBVm8"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQS5M4aaYxWkDmBdftC8ZTiarBbz2B57ZRSL1QzvcBRw-Ksd70SSfregbj&s=10" alt="ENROLADOS"><h3>ENROLADOS</h3></div>
-<div class="card" data-video-id="12wq5D7rKLD58H3iJPPen0_WcClJQbgt0"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKfNHI-WBNS_FeoLiXcJY9cpPkoee2jV-a-g&usqp=CAU" alt="REI LEÃO"><h3>REI LEÃO</h3></div>
-<div class="card" data-video-id="0B01Bil6Bc7xdYlR3UmZZZWJtaTg"><img src="https://upload.wikimedia.org/wikipedia/pt/a/a7/Toy_Story_1995.jpg" alt="TOY STORY"><h3>TOY STORY</h3></div>
-<div class="card" data-video-id="1STn-2kVdCZABpk720gMwgyNCoLs4wTEh"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUW40Phj12I0xU-YZeX7RhKr0s2Jd2DDxfKg&usqp=CAU" alt="TOY STORY 2"><h3>TOY STORY 2</h3></div>
-<div class="card" data-video-id="0B01Bil6Bc7xdaEFSc21aVkxnaTA"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSWc41N_IMKXB4lOwyBQPLAa8adcyCptBe_dxAv2iT29fCY1T7HXP-VFQg2Ej5HxZTugpHihof-irlGdelpuBGdYkqqme0I6KeSzGbrYro" alt="TOY STORY 3"><h3>TOY STORY 3</h3></div>
-<div class="card" data-video-id="1zcYKgzbh0adWyEIe5Y1BaAiuKnfp-g9t"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSWydiBjlv2wEbxsH_KUhUXceSCgC9WYyV0FdkaEaJEw&s" alt="UP ALTAS AVENTURAS"><h3>UP ALTAS AVENTURAS</h3></div>
-<div class="card" data-video-id="1qFJgLbD2yckD3tXwgekhbtQ02z5oOEaz"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRGs3cLTF6drMAFuB4wP5VoWhg-MoYzhxMkzK5Oym7eCO5l4xD2sdGmZy2d3mBB5NEuJ9F_nQjK9xZDQeavaNhUuOnn88KDxQpPbu0Nht0" alt="VIAGEM AO CENTRO"><h3>VIAGEM AO CENTRO</h3></div>
-<div class="card" data-video-id="1JgxLGhwwPH5vvZJIM7JGH56A-KNSYqYp"><img src="https://images.justwatch.com/poster/322331474/s718/viagem-2.jpg" alt="VIAGEM 2"><h3>VIAGEM 2</h3></div>
-<div class="card" data-video-id="1ulcelUxXdYkJa9oU1Jrq5fbzTI-mMn8l"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRPZw1irUN2zmvWDsk7AiN2yAKX7L9GHhcnpkfOi9c1CzNl8XuHb0lmVhAnoIHYM9eXhemNF410M0DXwfTaGZ14ynPbt4nvJn25ahTOJao" alt="VOVÓ... ZONA"><h3>VOVÓ... ZONA</h3></div>
-<div class="card" data-video-id="1zY6eLD1hX1IsFpR-KW3rClUYawmpDiYd"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5w9srZvRKRdt_oyNMw7NgInJowKl_5fPR-w&usqp=CAU" alt="VOVÓ... ZONA 2"><h3>VOVÓ... ZONA 2</h3></div>
-<div class="card" data-video-id="1wKCPI2hC9EoLG8_oSbt7bpECFVbV93gY"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCii9nzJ5kJueqfUHYKlYFEkpn8vpyHwx83OqSn-xOK9NN7pxjHPKQfbMRatfycLF8Zq9PJW8re29EFYzxARud36VH-Js6CNqt3_QNDes" alt="VOVÓ... ZONA 3"><h3>VOVÓ... ZONA 3</h3></div>
-<div class="card" data-video-id="11Dd1SONqq43elpk9gzgsbp_pyztumqQu"><img src="https://br.web.img2.acsta.net/pictures/210/168/21016896_20130701202610322.jpg" alt="PARCY JACKSON"><h3>PARCY JACKSON</h3></div>
-<div class="card" data-video-id="1p0XrNZh9qmkzwb5cTUvY7pQwGUAocoIz"><img src="https://http2.mlstatic.com/D_NQ_NP_805068-MLA75683634056_042024-OO.jpg" alt="SHOW DE TRUMAN"><h3>SHOW DE TRUMAN</h3></div>
-<div class="card" data-video-id="1ckKDAStKHoNhaSMDmuzAa0iMY4I69QyA"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGolE5GF4i4m4ejLkGcpDtl6UfP_y4zglWWw&usqp=CAU" alt="LOGAN"><h3>LOGAN</h3></div>
-<div class="card" data-video-id="1-V9CHVFxNXom_3viyfcGArJ3h5rXxAPt"><img src="https://play-lh.googleusercontent.com/3-Qy5gX79DWT8c6F_hiPuwP2J1HY9nsDk1habMNGqkX87ek6oR4U3_XaGm7XghlaAW8U=w240-h480-rw" alt="RIO 2"><h3>RIO 1</h3></div>
-<div class="card" data-video-id="1KY75pXBPKNlDa_6n7LXyh8HT1wl9MEVs"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg6lHtdOveZ1OTeavjRjbBTE5EFdYisZ1suqHugTwopJDrrUHwMk8svfuF&s=10" alt="RIO 2"><h3>RIO 2</h3></div>
-<div class="card" data-video-id="1TYTeEmBQ567nyTv_6ojuZO4YIKaLUpE0"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTQqpvfwXIN0iX3M3a0PCiYMcNq0umnsh8Ou8aB75O17qPrksoHcxv111nJZrCSsuMiqNmjpsEhvgPEzRLnrqsacx_VzzHoWsnGZMrX_A" alt="TODO MUNDO EM PÂNICO"><h3>TODO MUNDO EM PÂNICO</h3></div>
-<div class="card" data-video-id="1AYZtSyrgH3d6rsZzihr6_rFaLpkSJlco"><img src="https://m.media-amazon.com/images/M/MV5BNTU3YzY0ZTItZTc5YS00Y2I3LTllNmQtMzA2NTI3MzRjNWNhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="TODO MUNDO EM PÂNICO 2"><h3>TODO MUNDO EM PÂNICO 2</h3></div>
-<div class="card" data-video-id="19OgTImUTv5VFvOlIk43jeAJ0meDMKieF"><img src="https://http2.mlstatic.com/D_NQ_NP_761070-MLA80251735178_112024-OO.jpg" alt="TODO MUNDO EM PÂNICO 3"><h3>TODO MUNDO EM PÂNICO 3</h3></div>
-<div class="card" data-video-id="1vslg0UmMK68A2AROt7nnmqY540yUW--O"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlpOvVvIMGdYMdGklJ-SVq8gLzDD9RX0QYtrBobr-KhrJzF4K2a9yA8uBJ&s=10" alt="TODO MUNDO EM PÂNICO 4"><h3>TODO MUNDO EM PÂNICO 4</h3></div>
-<div class="card" data-video-id="1aS8LIK8s06NbCc78JUu40tMHu3Si-R4r"><img src="https://br.web.img2.acsta.net/r_1024_576/pictures/16/05/17/17/25/015640.jpg" alt="TODO MUNDO EM PÂNICO 5"><h3>TODO MUNDO EM PÂNICO 5</h3></div>
-<div class="card" data-video-id="15ivjSpEC7EN1FSF2sdts6pjcrN3x9gZ2"><img src="https://pbs.twimg.com/media/GwYrqflXIAAF-ty.jpg:large" alt="COMO TREINAR SEU DRAGÃO"><h3>COMO TREINAR SEU DRAGÃO</h3></div>
-<div class="card" data-video-id="1Z9avhteAqqO6IEJZw1nmXi3YnluHIUpB"><img src="https://play-lh.googleusercontent.com/1r9pjEP2W5IEBNZ54m5ppGlpj-YE7quFCHMNtHsYJtiPTnU2uSMguEk6Dm59EdsCL7Th=w240-h480-rw" alt="COMO TREINAR SEU DRAGÃO 2"><h3>COMO TREINAR SEU DRAGÃO 2</h3></div>
-<div class="card" data-video-id="1_g0Oz4o2zoNgeXx5b9zxJk3C3PCGERvD"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUdvHCk4gc86wOlDSK2gyP2D0WGmS3I3Joc9uId5zncVl-ITxdmIEmRc4&s=10" alt="COMO TREINAR SEU DRAGÃO 3"><h3>COMO TREINAR SEU DRAGÃO 3</h3></div>
-<div class="card" data-video-id="0ByfEzfBLMGseMnZOOEdVTk1NRXc"><img src="https://cdn.imago-images.de/bild/st/0094692266/s.jpg" alt="NORBIT"><h3>NORBIT</h3></h3></div>
-<div class="card" data-video-id="1-89cwQDA6QU2TzvDxotDG9F8PQikME7j"><img src="https://br.web.img2.acsta.net/medias/nmedia/18/87/76/98/19961364.jpg" alt="BOLT"><h3>BOLT</h3></div>
-<div class="card" data-video-id="1_U2EForQklIU0QoJo8uT-FW37nVPrqZZ"><img src="https://m.media-amazon.com/images/I/71u6G9GjxBL._UF894,1000_QL80_.jpg" alt="RATATOUILLE"><h3>RATATOUILLE</h3></div>
-<div class="card" data-video-id="1zHmDli6eJb7LZ93vk2lgPTRAGcQbKVrC"><img src="https://br.web.img2.acsta.net/medias/nmedia/18/90/89/85/20119071.jpg" alt="LILO & STITCH"><h3>LILO & STITCH</h3></div>
-<div class="card" data-video-id="1J1CFY7k8-7yZ-BQLzQxHXb2q1ZCIZYyS"><img src="https://m.media-amazon.com/images/I/81vTHovrz+L._UF894,1000_QL80_.jpg" alt="Homem de Ferro"><h3>Homem de Ferro</h3></div>
-<div class="card" data-video-id="1V3SRC6Qck_qGgFMHGqjQxjMHsR2mvg5V"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjY26hcnTtYl9-utfgH_xD2YcXvULlD-s99UKbZPj6Sg&s=10" alt="Homem de Ferro 2"><h3>Homem de Ferro 2</h3></div>
-<div class="card" data-video-id="bc1qpjq2u4vwnyxe3u0flg8hfp3c8mfmd9f38ydu07"><img src="https://m.media-amazon.com/images/M/MV5BOTA3NmU3YTMtYjE2YS00NWNkLTg3ZWQtOGNiNjZiZTViNDRkXkEyXkFqcGc@._V1_.jpg" alt="Homem de Ferro 3"><h3>Homem de Ferro 3</h3></div>
-<div class="card" data-video-id="1jbuxpNhwaD22UeyIyKvYLDm9P8lBpDe7"><img src="https://m.media-amazon.com/images/M/MV5BYzZlOGEyZTMtYmIxYS00NmIxLWIwNjYtMzY3Yjg2OThjODU2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="A Ligação (2020)"><h3>A Ligação (2020)</h3></div>
-<div class="card" data-video-id="1B21f5BnL3YE71T2PQbvuJqrUgFSoH-_L"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRwidwOb2qWxPHr-EDjTONf5njaNs7UhtcwCYp61zdgBI5O-6TNS3HhyhNhzHm78l0TGX-onIuFEFxqk8WcC0M3mmOfAxIU_5KG5dPEopY" alt="A Noiva Cadáver"><h3>A Noiva Cadáver</h3></div>
-<div class="card" data-video-id="1xfE9GnpKT8G8HnpUGK7mtCJSl6aaM5Wb"><img src="https://br.web.img3.acsta.net/medias/nmedia/18/87/30/75/19874147.jpg" alt="Garota Infernal"><h3>Garota Infernal</h3></div>
-<div class="card" data-video-id="0B61IslpS_OonajJPcnk4OU9FVG8"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCdCsDBHeEuRP4fWb7TEM_Pg2ZNdTkANEPaQ&usqp=CAU" alt="O Diabo Veste Prada"><h3>O Diabo Veste Prada</h3></div>
-<div class="card" data-video-id="1XEGlgvQZxfd5tvHwp4Y6VgLrT0DAScgO"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUaZ0dhdYr65xjEVuSk_90pks7wMuLoY63mxSiayhLc1d1oXp5FbZecLun-lkKXnjVr1R2cAOYxJrfOI1nO75r9UC5cRGIIOfylaabMg" alt="Cisne Negro"> <h3>Cisne Negro</h3></div>
-<div class="card" data-video-id="1xWGVp9Aq-cnPnQD_VRIPrUBG_scEOb2r"> <img src="https://m.media-amazon.com/images/M/MV5BMjE2NjI0ZDUtNWZhMy00OWMxLTllMzAtZWZlM2Q4YmEyNGIxXkEyXkFqcGc@._V1_QL75_UY281_CR4,0,190,281_.jpg" alt="3096 Dias de Cativeiro"><h3>3096 Dias de Cativeiro</h3></div>
-<div class="card" data-video-id="12ksVCZsKyrrd4jbvawSIg6JuUc-zhLV7"><img src="https://m.media-amazon.com/images/M/MV5BMTA5YjllYTAtOTU1Ni00YzAxLWJkZTUtYmQxOTM1YWM0YjcxXkEyXkFqcGc@._V1_.jpg" alt="O Exorcismo de Emily Rose"><h3>O Exorcismo de Emily Rose</h3></div>
-<div class="card" data-video-id="1Dy5kuSYIS5HMtDkc-bPy9C7cmJLOVFNG"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQGvM68tYzqfwFNiQuv1sdGMlFAsVCTCilAQ&usqp=CAU" alt="Corra!"><h3>Corra!</h3></div>
-<div class="card" data-video-id="1xIyCKn7X0MsByAW2zSuU8cK0wwLOOQjs"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNeVrMsqZA9zzLKl7wd7XMrWoHegT2VVuX2YXH7gnVoXgAgLTiT7cJ_vuT&s=10" alt="Bruna Surfistinha"><h3>Bruna Surfistinha</h3></div>
-<div class="card" data-video-id="1l8AfvZnHDJ7eUnhHkNrzSXuyWYh7XG1B"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzIEBvzhLuI8z9Wpp46kH5Uv1EY50WrXv6poNjl8y1Rr6b791I20VODU&s=10" alt="Whiplash – Em Busca da Perfeição"><h3>Whiplash – Em Busca da Perfeição</h3></div>
-<div class="card" data-video-id="1VnC7qSxnL-y-04q_snxUniyzz9AsLPP-"><img src="https://img.migalhas.com.br/gf_Base/empresas/miga/imagens/73EFFEB50E54EFD03414193143D8599A5E1A_madagascar.JPG" alt="Whiplash – madagascar o filme "><h3>madagascar o filme</h3></div>
-<div class="card" data-video-id="1cpHkt1yJx9CK3zW4OVhI0WkrqAb-cNXB"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGQw-UhPU9P-wyT1FMziskBiUhGT96IkzaEA&s" alt="zootopia"><h3>zootopia</h3></div>
-<div class="card" data-video-id="1RilhUCEbGjWwJMPygjd8wIlNPvgUF5XD"><img src="https://br.web.img3.acsta.net/medias/nmedia/18/90/08/92/20083797.jpg" alt="era do gelo 4"><h3>era do gelo 4</h3></div>
-<div class="card" data-video-id="1VuAameCMpXe5oUn7oc8P8yNPQWcM7f3d"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQjGQ3N_c4SfUoZK8fA7Db4SVYE2Fm1UgMIPdqVW6zI4xse8DcEPplxjgPUrTqCsOCXH9QmSgufKfQbaSYq-RZhbc8vaMODHj2-FcqZhTM" alt="MADAGASCAR"><h3>madagascar 2</h3></div>
-<div class="card" data-video-id="1VxzEoBQdOyDDXzMOXmPHoz9Ic4waBMch"><img src="https://br.web.img3.acsta.net/r_1920_1080/medias/nmedia/18/89/65/55/20060894.jpg" alt="MADAGASCAR"><h3>madagascar 3</h3></div>
-<div class="card" data-video-id="1wsVGR8kAjk5zvTaEgm1i8d6KYsxTU4as"><img src="https://i.pinimg.com/736x/a2/eb/88/a2eb8897ebe4ecb9da942b7d5a4f7488.jpg" alt="Vingadores"><h3>Vingadores</h3></div>
-<div class="card" data-video-id="1s8ZTUq2R7-eIr2dTWhzbYVsbJEp5HF2v"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5IazRW2YGJunPoAi6CCX09KplcvQcg7cHAA&s" alt="Vingadores 2"><h3>Vingadores 2</h3></div>
-<div class="card" data-video-id="144vcdiGLbR8T24DDt_W2OQNY-WECZYIW"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/harry-potter-e-a-pedra-filosofal/db9d9e76-866e-4725-ba3d-3a68ddd4589e.webp" alt="harry potter e a pedra filosofal"><h3>harry potter e a pedra filosofal</h3></div>
-  </main>
+<!DOCTYPE html>  <html lang="pt-BR">  
+<head>  
+  <meta charset="utf-8" />  
+  <meta name="viewport" content="width=device-width,initial-scale=1" />  
+  <title>Catálogo de Filmes</title>  
+  <style>  
+    /* ======= ESTILO GERAL ======= */  
+    * { margin:0; padding:0; box-sizing:border-box; font-family: Arial, sans-serif; }  
+    body { background:#111; color:#fff; }  
+    header {  
+      display:flex; align-items:center; justify-content:space-between;  
+      padding:15px 20px; background:#222; position:sticky; top:0; z-index:1000;  
+    }  
+    header .logo { font-size:20px; font-weight:700; color:#f39c12; }  /* pesquisa */  
+.search-container { display:flex; align-items:center; gap:8px; }  
+#searchInput {  
+  padding:8px 10px; border-radius:6px; border:none; outline:none; width:220px;  
+  background:#000; color:#fff; box-shadow:0 0 8px rgba(0,0,0,0.6);  
+}  
+#searchInput::placeholder { color:#999; }  
+.search-btn { background:#f39c12; border:none; padding:8px 10px; border-radius:6px; cursor:pointer; }  
 
-  <!-- Modal -->
+/* overlay (quando sidebar aberto) */  
+.overlay {  
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:900;  
+}  
+.overlay.active { display:block; }  
+
+/* sidebar */  
+.sidebar {  
+  position:fixed; top:0; left:-270px; width:270px; height:100%; background:#222; padding:18px;  
+  transition:left .28s ease; z-index:950; overflow-y:auto;  
+}  
+.sidebar.active { left:0; }  
+.sidebar h2 { color:#f39c12; margin-bottom:12px; }  
+.sidebar ul { list-style:none; }  
+.sidebar ul li { padding:8px 0; cursor:pointer; color:#ddd; }  
+.sidebar ul li:hover { color:#f39c12; }  
+.closeSidebar { position:absolute; top:8px; right:12px; font-size:26px; color:#fff; cursor:pointer; }  
+
+/* controls top */  
+.controls { display:flex; justify-content:center; gap:10px; padding:18px; background:#171717; }  
+.btn { background:#f39c12; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:700; }  
+
+/* grid */  
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; padding:20px; }  
+.card {  
+  background:#222; border-radius:8px; overflow:hidden; cursor:pointer; text-align:center;  
+  transition:transform .14s ease, box-shadow .14s ease; padding-bottom:8px;  
+}  
+.card:hover { transform:translateY(-6px); box-shadow:0 8px 24px rgba(0,0,0,0.6); }  
+.card img { width:100%; height:210px; object-fit:cover; display:block; }  
+.card h3 { padding:8px 6px; font-size:14px; color:#fff; }  
+
+/* modal */  
+.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:1100; }  
+.modal.active { display:flex; }  
+.modal-content {  
+  width:92%; max-width:900px; background:#000; border-radius:8px; position:relative; padding:12px;  
+}  
+.modal-content video, .modal-content iframe {  
+  width:100%; height:calc(56.25vw); max-height:520px; border-radius:6px; background:#000;  
+}  
+.close { position:absolute; top:-34px; right:0; font-size:32px; color:#fff; cursor:pointer; }  
+
+/* responsive tweaks */  
+@media (max-width:600px){  
+  .card img { height:160px; }  
+  #searchInput { width:130px; }  
+}
+
+  </style>  
+</head>  
+<body>  
+  <header>  
+    <div class="logo">🎬 Filminhos</div>  
+    <div class="search-container">  
+      <input id="searchInput" placeholder="Pesquisar..." />  
+      <button id="searchBtn" class="search-btn">🔎</button>  
+    </div>  
+  </header>    <div class="overlay" id="overlay"></div>    <div class="sidebar" id="sidebar">  
+    <span class="closeSidebar" id="closeSidebar">&times;</span>  
+    <h2>Gêneros</h2>  
+    <ul>  
+      <li data-genre="animacao">Animação</li>  
+      <li data-genre="acao">Ação</li>  
+      <li data-genre="comedia">Comédia</li>  
+      <li data-genre="terror">Terror</li>  
+      <li data-genre="drama">Drama</li>  
+      <li data-genre="todos">Todos</li>  
+    </ul>  
+  </div>    <div class="controls">  
+    <button class="btn" id="menuToggle">☰ Gêneros</button>  
+    <button class="btn" id="sortAZ">A - Z</button>  
+    <button class="btn" id="sortZA">Z - A</button>  
+  </div>    <main class="grid" id="movieGrid">  
+    <!-- Converti seus data-video-id para links do Drive (uc?export=download&id=ID) e adicionei data-title -->  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1W9J1EvIbuei7YkiILt33d00-7mvmvkjB" data-title="CARROS"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPbrLOQ-dpJuOjte7dKTz1zmyo46SRqIwWrKsLsFJUEw&s" alt="CARROS"><h3>CARROS</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869" data-title="CARROS 2"><img src="https://br.web.img3.acsta.net/r_1280_720/medias/nmedia/18/71/72/07/19770156.jpg" alt="CARROS 2"><h3>CARROS 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG" data-title="CARROS 3"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KrxJxQzJGNHzh-Aj21C94x-EbkjjOg62-p65S4-ICfbsMGR9It1XhPqR&s=10" alt="CARROS 3"><h3>CARROS 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1A2tHf77Gq0m9upcZhz_0C9LW0XaY5ZDM" data-title="A ERA DO GELO"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI81OGQpkjPFAh3ZuzOp4H7YPFTDy7JGDEC6rJDuy1Zw&s=10" alt="A ERA DO GELO"><h3>A ERA DO GELO</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1KhUII2uqa8AvIBAMKE2WGbc0x7GbXNpr" data-title="A ERA DO GELO 2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKcr5v5P8FFMel_TRGhkUpFfbctKR_wyR3aJ3_kn6XCiYyPkqhveFJmUU&s=10" alt="A ERA DO GELO 2"><h3>A ERA DO GELO 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1SDqRYt17-d5ITPCaA2-m921MnB9Ytlq7" data-title="A ERA DO GELO 3"><img src="https://br.web.img2.acsta.net/medias/nmedia/18/90/71/90/20109889.jpg" alt="A ERA DO GELO 3"><h3>A ERA DO GELO 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1MiqOg2g2MbKRwexsa1xxF4Uxa6Y9-saJ" data-title="WALL-E"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sD2MrgnTDuGRtMq4IWj_4xzxmLZMQunaiF2Q83h7AcIeRcMW8coHbW0&s=10" alt="WALL-E"><h3>WALL-E</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1UB8XE4xI7dRV1z9FN6K0ByQszjTp7uiW" data-title="MONSTROS S.A"><img src="https://media.fstatic.com/NANeWIPZEF1lkQSfoIlpDF2XSPg=/210x312/smart/filters:format(webp)/media/movies/covers/2019/07/monstros.jpg" alt="MONSTROS S.A"><h3>MONSTROS S.A</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1kAqZvenx25ZTe8dLoLzcze0CQta39dnf" data-title="TREINAR SEU DRAGÃO LIVE"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSWUhU5cn1rlRUR1wJXGET7DmkiKaj7W_KccUrr8cS6zeWfYjzcVnKpW8Y&s=10" alt="TREINAR SEU DRAGÃO LIVE"><h3>TREINAR SEU DRAGÃO LIVE</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1D0csjJowIdqEMzby_Lw1thUuTwtRGlKM" data-title="PONTE PARA TERABITIA"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwE04UdWSgjRtBMlcFQKwjHJ-duqlQd5QS_xq4BdRkAA&s=10" alt="PONTE PARA TERABITIA"><h3>PONTE PARA TERABITIA</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1EY7XtXNVyRcjhOD6qOlqWYM9PoO1Mpyg" data-title="BARBIE: A PRINCESA E A POP"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFKjgSviyJjWvIlHuPAE6Pq0n4oaJaxfGxeh4GItDIGQ&s=10" alt="BARBIE: A PRINCESA E A POP"><h3>BARBIE: A PRINCESA E A POP</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1FzqqQntWnAMTYFPrM5Hks9byD9oao6_h" data-title="BARBIE: ESCOLA DE PRINCESAS"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSv6iUELHn4hZsJVuRxFq6S5wWV4Rerafk-oYNkoILeg&s=10" alt="BARBIE: ESCOLA DE PRINCESAS"><h3>BARBIE: ESCOLA DE PRINCESAS</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1__kc1FMfND14ypIlKp7yTio58l0pLVKE" data-title="A PRINCESA E O SAPO"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeLjD1QfkLcVsJunTWX3juX6-GOreYn3LyzmWzjcJOtA&s" alt="A PRINCESA E O SAPO"><h3>A PRINCESA E O SAPO</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=16wU4J9beNwBIQiwyHvgjuzNMZw9GqpUW" data-title="SHREK 4"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSXViRZX628FiyXvqFguo2czrDD92jNb5YuaHnrAd7OlnCzVjxIiVQUXd7spsftf2QvOX5dRngKWNEB8mcKJ5xTxbIdkWvHXHjQUD9d_Pk" alt="SHREK 4"><h3>SHREK 4</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1SgPD-5D19e7XWNEeVGTESieejwQJVVyv" data-title="PANICO"><img src="https://play-lh.googleusercontent.com/8b0izQwxU79gMpvcdSHqjcYlAmaTXgTL-rXrijHkeYfYEnQbmdj0pKOOUj3mqc3u8eE" alt="PANICO"><h3>PANICO</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1oKudayXraNmTZksbW1Yu9g7GK672cmu3" data-title="PANICO 2"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTk25PVtpQYO4F63We8P1nEsTl8LuRpo2Kf_8BWA63m_27AP-T3tcga2C-l0DktvhYJyQiCYIrrYA8xez9z0a_KrUeW_dWHrLU_5bKuwo0" alt="PANICO 2"><h3>PANICO 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1ZPy4Z6vVfdyoazBWh6_ak6JWhMQhC7Fv" data-title="PANICO 4"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmdgPNeSgF6zvLATdv2p-hrF4zThwBmG8c_XdGIvb_OCUs3W_tSgBPmOq1&s=10" alt="PANICO 4"><h3>PANICO 4</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=132_vwYz5zXMQORAhWmTwQHlLZ47Tpu7V" data-title="A 5 PASSOS DE VOCE"><img src="https://m.media-amazon.com/images/I/81Q11TuUR3L.jpg" alt="A 5 PASSOS DE VOCE"><h3>A 5 PASSOS DE VOCE</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=14ze444H1LYTK2Ke1sUdriALI4WTika7G" data-title="AS BEVERLY HILLS"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV9lbluafX_xkj34rieGm4p2Keol1Daf3C244v3BIfDK6XgQVZoVko7XmlZKTY941zPJcguTjkXucrx9nnzWnjVu5YARPjlguAnp-pgA" alt="AS BEVERLY HILLS"><h3>AS BEVERLY HILLS</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=0B23jIx5gZY-gQ0pkQjh4UENBVm8" data-title="ENROLADOS"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQS5M4aaYxWkDmBdftC8ZTiarBbz2B57ZRSL1QzvcBRw-Ksd70SSfregbj&s=10" alt="ENROLADOS"><h3>ENROLADOS</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=12wq5D7rKLD58H3iJPPen0_WcClJQbgt0" data-title="REI LEÃO"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKfNHI-WBNS_FeoLiXcJY9cpPkoee2jV-a-g&usqp=CAU" alt="REI LEÃO"><h3>REI LEÃO</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=0B01Bil6Bc7xdYlR3UmZZZWJtaTg" data-title="TOY STORY"><img src="https://upload.wikimedia.org/wikipedia/pt/a/a7/Toy_Story_1995.jpg" alt="TOY STORY"><h3>TOY STORY</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1STn-2kVdCZABpk720gMwgyNCoLs4wTEh" data-title="TOY STORY 2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUW40Phj12I0xU-YZeX7RhKr0s2Jd2DDxfKg&usqp=CAU" alt="TOY STORY 2"><h3>TOY STORY 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=0B01Bil6Bc7xdaEFSc21aVkxnaTA" data-title="TOY STORY 3"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSWc41N_IMKXB4lOwyBQPLAa8adcyCptBe_dxAv2iT29fCY1T7HXP-VFQg2Ej5HxZTugpHihof-irlGdelpuBGdYkqqme0I6KeSzGbrYro" alt="TOY STORY 3"><h3>TOY STORY 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1zcYKgzbh0adWyEIe5Y1BaAiuKnfp-g9t" data-title="UP ALTAS AVENTURAS"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSWydiBjlv2wEbxsH_KUhUXceSCgC9WYyV0FdkaEaJEw&s" alt="UP ALTAS AVENTURAS"><h3>UP ALTAS AVENTURAS</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1qFJgLbD2yckD3tXwgekhbtQ02z5oOEaz" data-title="VIAGEM AO CENTRO"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRGs3cLTF6drMAFuB4wP5VoWhg-MoYzhxMkzK5Oym7eCO5l4xD2sdGmZy2d3mBB5NEuJ9F_nQjK9xZDQeavaNhUuOnn88KDxQpPbu0Nht0" alt="VIAGEM AO CENTRO"><h3>VIAGEM AO CENTRO</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1JgxLGhwwPH5vvZJIM7JGH56A-KNSYqYp" data-title="VIAGEM 2"><img src="https://images.justwatch.com/poster/322331474/s718/viagem-2.jpg" alt="VIAGEM 2"><h3>VIAGEM 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1ulcelUxXdYkJa9oU1Jrq5fbzTI-mMn8l" data-title="VOVÓ... ZONA"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRPZw1irUN2zmvWDsk7AiN2yAKX7L9GHhcnpkfOi9c1CzNl8XuHb0lmVhAnoIHYM9eXhemNF410M0DXwfTaGZ14ynPbt4nvJn25ahTOJao" alt="VOVÓ... ZONA"><h3>VOVÓ... ZONA</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1zY6eLD1hX1IsFpR-KW3rClUYawmpDiYd" data-title="VOVÓ... ZONA 2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5w9srZvRKRdt_oyNMw7NgInJowKl_5fPR-w&usqp=CAU" alt="VOVÓ... ZONA 2"><h3>VOVÓ... ZONA 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1wKCPI2hC9EoLG8_oSbt7bpECFVbV93gY" data-title="VOVÓ... ZONA 3"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCii9nzJ5kJueqfUHYKlYFEkpn8vpyHwx83OqSn-xOK9NN7pxjHPKQfbMRatfycLF8Zq9PJW8re29EFYzxARud36VH-Js6CNqt3_QNDes" alt="VOVÓ... ZONA 3"><h3>VOVÓ... ZONA 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=11Dd1SONqq43elpk9gzgsbp_pyztumqQu" data-title="PARCY JACKSON"><img src="https://br.web.img2.acsta.net/pictures/210/168/21016896_20130701202610322.jpg" alt="PARCY JACKSON"><h3>PARCY JACKSON</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1p0XrNZh9qmkzwb5cTUvY7pQwGUAocoIz" data-title="SHOW DE TRUMAN"><img src="https://http2.mlstatic.com/D_NQ_NP_805068-MLA75683634056_042024-OO.jpg" alt="SHOW DE TRUMAN"><h3>SHOW DE TRUMAN</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1ckKDAStKHoNhaSMDmuzAa0iMY4I69QyA" data-title="LOGAN"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGolE5GF4i4m4ejLkGcpDtl6UfP_y4zglWWw&usqp=CAU" alt="LOGAN"><h3>LOGAN</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1-V9CHVFxNXom_3viyfcGArJ3h5rXxAPt" data-title="RIO 1"><img src="https://play-lh.googleusercontent.com/3-Qy5gX79DWT8c6F_hiPuwP2J1HY9nsDk1habMNGqkX87ek6oR4U3_XaGm7XghlaAW8U=w240-h480-rw" alt="RIO 1"><h3>RIO 1</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1KY75pXBPKNlDa_6n7LXyh8HT1wl9MEVs" data-title="RIO 2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg6lHtdOveZ1OTeavjRjbBTE5EFdYisZ1suqHugTwopJDrrUHwMk8svfuF&s=10" alt="RIO 2"><h3>RIO 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1TYTeEmBQ567nyTv_6ojuZO4YIKaLUpE0" data-title="TODO MUNDO EM PÂNICO"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTQqpvfwXIN0iX3M3a0PCiYMcNq0umnsh8Ou8aB75O17qPrksoHcxv111nJZrCSsuMiqNmjpsEhvgPEzRLnrqsacx_VzzHoWsnGZMrX_A" alt="TODO MUNDO EM PÂNICO"><h3>TODO MUNDO EM PÂNICO</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1AYZtSyrgH3d6rsZzihr6_rFaLpkSJlco" data-title="TODO MUNDO EM PÂNICO 2"><img src="https://m.media-amazon.com/images/M/MV5BNTU3YzY0ZTItZTc5YS00Y2I3LTllNmQtMzA2NTI3MzRjNWNhXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="TODO MUNDO EM PÂNICO 2"><h3>TODO MUNDO EM PÂNICO 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=19OgTImUTv5VFvOlIk43jeAJ0meDMKieF" data-title="TODO MUNDO EM PÂNICO 3"><img src="https://http2.mlstatic.com/D_NQ_NP_761070-MLA80251735178_112024-OO.jpg" alt="TODO MUNDO EM PÂNICO 3"><h3>TODO MUNDO EM PÂNICO 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1vslg0UmMK68A2AROt7nnmqY540yUW--O" data-title="TODO MUNDO EM PÂNICO 4"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlpOvVvIMGdYMdGklJ-SVq8gLzDD9RX0QYtrBobr-KhrJzF4K2a9yA8uBJ&s=10" alt="TODO MUNDO EM PÂNICO 4"><h3>TODO MUNDO EM PÂNICO 4</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1aS8LIK8s06NbCc78JUu40tMHu3Si-R4r" data-title="TODO MUNDO EM PÂNICO 5"><img src="https://br.web.img2.acsta.net/r_1024_576/pictures/16/05/17/17/25/015640.jpg" alt="TODO MUNDO EM PÂNICO 5"><h3>TODO MUNDO EM PÂNICO 5</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=15ivjSpEC7EN1FSF2sdts6pjcrN3x9gZ2" data-title="COMO TREINAR SEU DRAGÃO"><img src="https://pbs.twimg.com/media/GwYrqflXIAAF-ty.jpg:large" alt="COMO TREINAR SEU DRAGÃO"><h3>COMO TREINAR SEU DRAGÃO</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1Z9avhteAqqO6IEJZw1nmXi3YnluHIUpB" data-title="COMO TREINAR SEU DRAGÃO 2"><img src="https://play-lh.googleusercontent.com/1r9pjEP2W5IEBNZ54m5ppGlpj-YE7quFCHMNtHsYJtiPTnU2uSMguEk6Dm59EdsCL7Th=w240-h480-rw" alt="COMO TREINAR SEU DRAGÃO 2"><h3>COMO TREINAR SEU DRAGÃO 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1_g0Oz4o2zoNgeXx5b9zxJk3C3PCGERvD" data-title="COMO TREINAR SEU DRAGÃO 3"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUdvHCk4gc86wOlDSK2gyP2D0WGmS3I3Joc9uId5zncVl-ITxdmIEmRc4&s=10" alt="COMO TREINAR SEU DRAGÃO 3"><h3>COMO TREINAR SEU DRAGÃO 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=0ByfEzfBLMGseMnZOOEdVTk1NRXc" data-title="NORBIT"><img src="https://cdn.imago-images.de/bild/st/0094692266/s.jpg" alt="NORBIT"><h3>NORBIT</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1-89cwQDA6QU2TzvDxotDG9F8PQikME7j" data-title="BOLT"><img src="https://br.web.img2.acsta.net/medias/nmedia/18/87/76/98/19961364.jpg" alt="BOLT"><h3>BOLT</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1_U2EForQklIU0QoJo8uT-FW37nVPrqZZ" data-title="RATATOUILLE"><img src="https://m.media-amazon.com/images/I/71u6G9GjxBL._UF894,1000_QL80_.jpg" alt="RATATOUILLE"><h3>RATATOUILLE</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1zHmDli6eJb7LZ93vk2lgPTRAGcQbKVrC" data-title="LILO & STITCH"><img src="https://br.web.img2.acsta.net/medias/nmedia/18/90/89/85/20119071.jpg" alt="LILO & STITCH"><h3>LILO & STITCH</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1J1CFY7k8-7yZ-BQLzQxHXb2q1ZCIZYyS" data-title="Homem de Ferro"><img src="https://m.media-amazon.com/images/I/81vTHovrz+L._UF894,1000_QL80_.jpg" alt="Homem de Ferro"><h3>Homem de Ferro</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1V3SRC6Qck_qGgFMHGqjQxjMHsR2mvg5V" data-title="Homem de Ferro 2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjY26hcnTtYl9-utfgH_xD2YcXvULlD-s99UKbZPj6Sg&s=10" alt="Homem de Ferro 2"><h3>Homem de Ferro 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=bc1qpjq2u4vwnyxe3u0flg8hfp3c8mfmd9f38ydu07" data-title="Homem de Ferro 3"><img src="https://m.media-amazon.com/images/M/MV5BOTA3NmU3YTMtYjE2YS00NWNkLTg3ZWQtOGNiNjZiZTViNDRkXkEyXkFqcGc@._V1_.jpg" alt="Homem de Ferro 3"><h3>Homem de Ferro 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1jbuxpNhwaD22UeyIyKvYLDm9P8lBpDe7" data-title="A Ligação (2020)"><img src="https://m.media-amazon.com/images/M/MV5BYzZlOGEyZTMtYmIxYS00NmIxLWIwNjYtMzY3Yjg2OThjODU2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="A Ligação (2020)"><h3>A Ligação (2020)</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1B21f5BnL3YE71T2PQbvuJqrUgFSoH-_L" data-title="A Noiva Cadáver"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRwidwOb2qWxPHr-EDjTONf5njaNs7UhtcwCYp61zdgBI5O-6TNS3HhyhNhzHm78l0TGX-onIuFEFxqk8WcC0M3mmOfAxIU_5KG5dPEopY" alt="A Noiva Cadáver"><h3>A Noiva Cadáver</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1xfE9GnpKT8G8HnpUGK7mtCJSl6aaM5Wb" data-title="Garota Infernal"><img src="https://br.web.img3.acsta.net/medias/nmedia/18/87/30/75/19874147.jpg" alt="Garota Infernal"><h3>Garota Infernal</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=0B61IslpS_OonajJPcnk4OU9FVG8" data-title="O Diabo Veste Prada"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCdCsDBHeEuRP4fWb7TEM_Pg2ZNdTkANEPaQ&usqp=CAU" alt="O Diabo Veste Prada"><h3>O Diabo Veste Prada</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1XEGlgvQZxfd5tvHwp4Y6VgLrT0DAScgO" data-title="Cisne Negro"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUaZ0dhdYr65xjEVuSk_90pks7wMuLoY63mxSiayhLc1d1oXp5FbZecLun-lkKXnjVr1R2cAOYxJrfOI1nO75r9UC5cRGIIOfylaabMg" alt="Cisne Negro"><h3>Cisne Negro</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1xWGVp9Aq-cnPnQD_VRIPrUBG_scEOb2r" data-title="3096 Dias de Cativeiro"><img src="https://m.media-amazon.com/images/M/MV5BMjE2NjI0ZDUtNWZhMy00OWMxLTllMzAtZWZlM2Q4YmEyNGIxXkEyXkFqcGc@._V1_QL75_UY281_CR4,0,190,281_.jpg" alt="3096 Dias de Cativeiro"><h3>3096 Dias de Cativeiro</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=12ksVCZsKyrrd4jbvawSIg6JuUc-zhLV7" data-title="O Exorcismo de Emily Rose"><img src="https://m.media-amazon.com/images/M/MV5BMTA5YjllYTAtOTU1Ni00YzAxLWJkZTUtYmQxOTM1YWM0YjcxXkEyXkFqcGc@._V1_.jpg" alt="O Exorcismo de Emily Rose"><h3>O Exorcismo de Emily Rose</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1Dy5kuSYIS5HMtDkc-bPy9C7cmJLOVFNG" data-title="Corra!"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQGvM68tYzqfwFNiQuv1sdGMlFAsVCTCilAQ&usqp=CAU" alt="Corra!"><h3>Corra!</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1xIyCKn7X0MsByAW2zSuU8cK0wwLOOQjs" data-title="Bruna Surfistinha"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNeVrMsqZA9zzLKl7wd7XMrWoHegT2VVuX2YXH7gnVoXgAgLTiT7cJ_vuT&s=10" alt="Bruna Surfistinha"><h3>Bruna Surfistinha</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1l8AfvZnHDJ7eUnhHkNrzSXuyWYh7XG1B" data-title="Whiplash – Em Busca da Perfeição"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzIEBvzhLuI8z9Wpp46kH5Uv1EY50WrXv6poNjl8y1Rr6b791I20VODU&s=10" alt="Whiplash – Em Busca da Perfeição"><h3>Whiplash – Em Busca da Perfeição</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1VnC7qSxnL-y-04q_snxUniyzz9AsLPP-" data-title="madagascar o filme"><img src="https://img.migalhas.com.br/gf_Base/empresas/miga/imagens/73EFFEB50E54EFD03414193143D8599A5E1A_madagascar.JPG" alt="madagascar o filme"><h3>madagascar o filme</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1cpHkt1yJx9CK3zW4OVhI0WkrqAb-cNXB" data-title="zootopia"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGQw-UhPU9P-wyT1FMziskBiUhGT96IkzaEA&s" alt="zootopia"><h3>zootopia</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1RilhUCEbGjWwJMPygjd8wIlNPvgUF5XD" data-title="era do gelo 4"><img src="https://br.web.img3.acsta.net/medias/nmedia/18/90/08/92/20083797.jpg" alt="era do gelo 4"><h3>era do gelo 4</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1VuAameCMpXe5oUn7oc8P8yNPQWcM7f3d" data-title="madagascar 2"><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQjGQ3N_c4SfUoZK8fA7Db4SVYE2Fm1UgMIPdqVW6zI4xse8DcEPplxjgPUrTqCsOCXH9QmSgufKfQbaSYq-RZhbc8vaMODHj2-FcqZhTM" alt="madagascar 2"><h3>madagascar 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1VxzEoBQdOyDDXzMOXmPHoz9Ic4waBMch" data-title="madagascar 3"><img src="https://br.web.img3.acsta.net/r_1920_1080/medias/nmedia/18/89/65/55/20060894.jpg" alt="madagascar 3"><h3>madagascar 3</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1wsVGR8kAjk5zvTaEgm1i8d6KYsxTU4as" data-title="Vingadores"><img src="https://i.pinimg.com/736x/a2/eb/88/a2eb8897ebe4ecb9da942b7d5a4f7488.jpg" alt="Vingadores"><h3>Vingadores</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=1s8ZTUq2R7-eIr2dTWhzbYVsbJEp5HF2v" data-title="Vingadores 2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5IazRW2YGJunPoAi6CCX09KplcvQcg7cHAA&s" alt="Vingadores 2"><h3>Vingadores 2</h3></div>  
+<div class="card" data-video="https://drive.google.com/uc?export=download&id=144vcdiGLbR8T24DDt_W2OQNY-WECZYIW" data-title="harry potter e a pedra filosofal"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/harry-potter-e-a-pedra-filosofal/db9d9e76-866e-4725-ba3d-3a68ddd4589e.webp" alt="harry potter e a pedra filosofal"><h3>harry potter e a pedra filosofal</h3></div>  
+  </main>    <!-- Modal -->    <div class="modal" id="videoModal" aria-hidden="true">  
+    <div class="modal-content" role="dialog" aria-modal="true">  
+      <span class="close" id="closeModal">&times;</span>  
+      <!-- usamos <video> para arquivos; se quiser usar iframe embed do Drive, substitua dinamicamente -->  
+      <video id="modalVideo" controls playsinline></video>  
+    </div>  
+  </div>    <script>  
+    // Seletores  
+    const sidebar = document.getElementById('sidebar');  
+    const overlay = document.getElementById('overlay');  
+    const menuToggle = document.getElementById('menuToggle');  
+    const closeSidebar = document.getElementById('closeSidebar');  
+    const movieGrid = document.getElementById('movieGrid');  
+    const searchInput = document.getElementById('searchInput');  
+    const searchBtn = document.getElementById('searchBtn');  
+    const sortAZ = document.getElementById('sortAZ');  
+    const sortZA = document.getElementById('sortZA');  
+    const videoModal = document.getElementById('videoModal');  
+    const modalVideo = document.getElementById('modalVideo');  
+    const closeModal = document.getElementById('closeModal');  
+  
+    // abrir sidebar  
+    menuToggle.addEventListener('click', () => {  
+      sidebar.classList.add('active');  
+      overlay.classList.add('active');  
+    });  
+  
+    // fechar sidebar  
+    closeSidebar.addEventListener('click', () => {  
+      sidebar.classList.remove('active');  
+      overlay.classList.remove('active');  
+    });  
+    overlay.addEventListener('click', () => {  
+      sidebar.classList.remove('active');  
+      overlay.classList.remove('active');  
+      // fechar modal se estiver aberto e clicou no overlay atrás do sidebar  
+      if (videoModal.classList.contains('active')) closeVideoModal();  
+    });  
+  
+    // pesquisa em tempo real (digitação)  
+    searchInput.addEventListener('input', () => {  
+      const q = searchInput.value.trim().toLowerCase();  
+      Array.from(movieGrid.children).forEach(card => {  
+        const title = (card.dataset.title || card.querySelector('h3')?.textContent || '').toLowerCase();  
+        card.style.display = title.includes(q) ? 'block' : 'none';  
+      });  
+    });  
+  
+    // também buscar no botão (opcional)  
+    searchBtn.addEventListener('click', () => {  
+      searchInput.dispatchEvent(new Event('input'));  
+    });  
+  
+    // ordenação  
+    function sortMovies(az = true) {  
+      const cards = Array.from(movieGrid.querySelectorAll('.card'));  
+      cards.sort((a,b) => {  
+        const aTitle = (a.dataset.title || a.querySelector('h3').textContent).toLowerCase();  
+        const bTitle = (b.dataset.title || b.querySelector('h3').textContent).toLowerCase();  
+        return az ? aTitle.localeCompare(bTitle) : bTitle.localeCompare(aTitle);  
+      });  
+      cards.forEach(c => movieGrid.appendChild(c));  
+    }  
+    sortAZ.addEventListener('click', () => sortMovies(true));  
+    sortZA.addEventListener('click', () => sortMovies(false));  
+  
+    // abrir modal no clique do card  
+    function openVideoModal(src) {  
+      // se src vier como link do Drive, nem sempre funciona direto em <video>;  
+      // primeiro tentamos carregar no <video>. Se não carregar, você pode querer trocar para iframe embed.  
+      modalVideo.src = src;  
+      modalVideo.currentTime = 0;  
+      videoModal.classList.add('active');  
+      videoModal.setAttribute('aria-hidden','false');  
+      overlay.classList.add('active');  
+      // foco para acessibilidade  
+      modalVideo.focus?.();  
+    }  
+  
+    function closeVideoModal() {  
+      modalVideo.pause();  
+      modalVideo.removeAttribute('src');  
+      videoModal.classList.remove('active');  
+      videoModal.setAttribute('aria-hidden','true');  
+      overlay.classList.remove('active');  
+    }  
+  
+    // delegação de clique: cobre muitos cards sem adicionar muitos listeners  
+    movieGrid.addEventListener('click', (e) => {  
+      const card = e.target.closest('.card');  
+      if (!card) return;  
+      const video = card.dataset.video; // já contido como drive uc?export=download&id=ID  
+      if (!video) {  
+        // sem link definido  
+        alert('Vídeo não configurado para esse filme.');  
+        return;  
+      }  
+      // abrir modal com o vídeo  
+      openVideoModal(video);  
+    });  
+  
+    // fechar modal  
+    closeModal.addEventListener('click', closeVideoModal);  
+    // fechar com ESC  
+    window.addEventListener('keydown', (e) => {  
+      if (e.key === 'Escape') {  
+        // prioriza fechar modal; caso contrário fecha sidebar  
+        if (videoModal.classList.contains('active')) closeVideoModal();  
+        else if (sidebar.classList.contains('active')) { sidebar.classList.remove('active'); overlay.classList.remove('active'); }  
+      }  
+    });  
+    // fechar clicando fora do modal-content  
+    videoModal.addEventListener('click', (e) => {  
+      if (e.target === videoModal) closeVideoModal();  
+    });  
+  <!-- Modal para o player -->
   <div class="modal" id="videoModal">
     <div class="modal-content">
       <span class="close" id="closeModal">&times;</span>
-      <iframe id="modalVideo" allow="autoplay" allowfullscreen></iframe>
+      <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
+    const cards = document.querySelectorAll('.card');
+    const modal = document.getElementById('videoModal');
+    const videoFrame = document.getElementById('videoFrame');
+    const closeModal = document.getElementById('closeModal');
 
-  <script>
-    const videoModal = document.getElementById("videoModal");
-    const modalVideo = document.getElementById("modalVideo");
-    const closeModal = document.getElementById("closeModal");
-    const movieGrid = document.getElementById("movieGrid");
-
-    // abre vídeo
-    document.querySelectorAll(".card").forEach(card => {
-      card.addEventListener("click", () => {
-        const vidId = card.dataset.videoId;
-        const previewLink = `https://drive.google.com/file/d/${vidId}/preview`;
-        modalVideo.src = previewLink;
-        videoModal.style.display = "flex";
-      });
-    });
-
-    // fecha vídeo
-    closeModal.addEventListener("click", () => {
-      modalVideo.src = ""; 
-      videoModal.style.display = "none";
-    });
-
-    // pesquisa por título
-    const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener("input", () => {
-      const term = searchInput.value.toLowerCase();
-      document.querySelectorAll(".card").forEach(card => {
-        const title = card.querySelector(".card-title").textContent.toLowerCase();
-        card.style.display = title.includes(term) ? "block" : "none";
-      });
-    });
-
-    // ordenação A-Z e Z-A
-    const sortSelect = document.getElementById("sortSelect");
-    sortSelect.addEventListener("change", () => {
-      const cards = Array.from(movieGrid.querySelectorAll(".card"));
-      
-      cards.sort((a, b) => {
-        const titleA = a.querySelector(".card-title").textContent.toLowerCase();
-        const titleB = b.querySelector(".card-title").textContent.toLowerCase();
-
-        if (sortSelect.value === "az") {
-          return titleA.localeCompare(titleB);
-        } else {
-          return titleB.localeCompare(titleA);
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        // pegar o link do drive que você usou no data-video
+        let videoUrl = card.getAttribute('data-video');
+        
+        // extrair o ID do drive (fica depois de id=)
+        let match = videoUrl.match(/id=([^&]+)/);
+        if(match){
+          let videoId = match[1];
+          // montar link do embed
+          let embedUrl = `https://drive.google.com/file/d/${videoId}/preview`;
+          videoFrame.src = embedUrl;
+          modal.classList.add('active');
         }
       });
-
-      movieGrid.innerHTML = "";
-      cards.forEach(card => movieGrid.appendChild(card));
     });
-  </script>
-</body>
-</html>
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.remove('active');
+      videoFrame.src = ""; // limpar para parar o vídeo
+    });
+
+    // fechar com ESC
+    document.addEventListener('keydown', (e) => {
+      if(e.key === "Escape"){
+        modal.classList.remove('active');
+        videoFrame.src = "";
+      }
+    });
+      </script>  </body>  
+</html> 

@@ -324,6 +324,21 @@ closeBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 window.addEventListener('keydown', e => { if (e.key === "Escape") closeModal(); });
 
+// Ordenação
+function sortCards(order) {
+  let cardsArray = Array.from(document.querySelectorAll('.card')); // pega de novo
+  let sorted = cardsArray.sort((a, b) => {
+    let t1 = a.getAttribute('data-title').toLowerCase();
+    let t2 = b.getAttribute('data-title').toLowerCase();
+    return order === "az" ? t1.localeCompare(t2) : t2.localeCompare(t1);
+  });
+  grid.innerHTML = "";
+  sorted.forEach(c => grid.appendChild(c));
+}
+
+sortAZ.addEventListener('click', () => sortCards("az"));
+sortZA.addEventListener('click', () => sortCards("za"));
+    
 // 🔎 Filtro de pesquisa
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('keyup', () => {

@@ -203,14 +203,19 @@
       if (videoModal.classList.contains('active')) closeVideoModal();
     });
 
-    // pesquisa em tempo real (digitação)
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.trim().toLowerCase();
-      Array.from(movieGrid.children).forEach(card => {
-        const title = (card.dataset.title || card.querySelector('h3')?.textContent || '').toLowerCase();
-        card.style.display = title.includes(q) ? 'block' : 'none';
-      });
-    });
+    // === Pesquisa ===
+searchBtn.addEventListener("click", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  const cards = movieGrid.querySelectorAll(".card");
+  cards.forEach(card => {
+    const title = card.querySelector("h3").textContent.toLowerCase();
+    if (title.includes(searchTerm)) {
+      card.style.display = ""; 
+    } else {
+      card.style.display = "none";
+    }
+  });
+});
 
     // também buscar no botão (opcional)
     searchBtn.addEventListener('click', () => {

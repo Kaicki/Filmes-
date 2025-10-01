@@ -1,228 +1,250 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FILMINHOS</title>
-<link href="https://fonts.googleapis.com/css?family=Orbitron:600|Inconsolata:700" rel="stylesheet">
-<style>
-:root {
-    --bg: #000;
-    --text: #fff;
-    --neon1: #9400D3;
-    --neon2: #0ff;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filminhos</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Inconsolata:700");
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-    font-family: "Orbitron", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-}
+    body {
+      background: #151515;
+      color: #fff;
+      font-family: "Inconsolata", monospace;
+    }
 
-/* Cabeçalho */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: #111;
-}
+    header {
+      padding: 20px;
+      background: #1f1f1f;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-/* Nome do site */
-h1 {
-    margin: 0;
-    font-size: 28px;
-    background: linear-gradient(90deg, var(--neon1), var(--neon2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px var(--neon1), 0 0 20px var(--neon2);
-}
+    header h1 {
+      font-size: 20px;
+      flex: 1;
+    }
 
-/* 🔎 Lupa expansiva */
-.search-container {
-  position: relative;
-  width: 300px;
-  height: 80px;
-  display: flex;
-  justify-content: flex-end;
-}
+    /* ===== PESQUISA COM LUPA ===== */
+    .container {
+      position: relative;
+      width: 250px;
+      height: 60px;
+    }
 
-.search {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: auto;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, var(--neon1), var(--neon2));
-  border-radius: 50%;
-  transition: all 1s;
-  z-index: 4;
-  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
-}
-.search::before {
-  content: "";
-  position: absolute;
-  margin: auto;
-  top: 18px;
-  left: 18px;
-  width: 12px;
-  height: 2px;
-  background: white;
-  transform: rotate(45deg);
-  transition: all 0.5s;
-}
-.search::after {
-  content: "";
-  position: absolute;
-  margin: auto;
-  top: -5px;
-  left: -5px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  border: 2px solid white;
-  transition: all 0.5s;
-}
+    .container .search {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60px;
+      height: 60px;
+      background: #222;
+      border-radius: 50%;
+      transition: all 0.5s ease;
+      z-index: 4;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+    .container .search::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 22px;
+      width: 12px;
+      height: 2px;
+      background: #fff;
+      transform: rotate(45deg);
+      transition: all 0.3s;
+    }
+    .container .search::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      transition: all 0.3s;
+    }
 
-.search-input {
-  font-family: "Inconsolata", monospace;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: auto;
-  width: 50px;
-  height: 50px;
-  outline: none;
-  border: none;
-  background: linear-gradient(135deg, var(--neon1), var(--neon2));
-  color: white;
-  text-shadow: 0 0 10px var(--neon2);
-  padding: 0 80px 0 20px;
-  border-radius: 30px;
-  box-shadow: 0 0 25px 0 var(--neon2), 0 20px 25px 0 rgba(0, 0, 0, 0.2);
-  transition: all 1s;
-  opacity: 0;
-  z-index: 5;
-  font-weight: bolder;
-  letter-spacing: 0.1em;
-  font-size: 16px;
-}
-.search-input:focus {
-  width: 250px;
-  opacity: 1;
-}
-.search-input:focus ~ .search {
-  right: 210px;
-  background: #151515;
-  z-index: 6;
-}
-.search-input:focus ~ .search::before {
-  top: 0;
-  left: 0;
-  width: 25px;
-}
-.search-input:focus ~ .search::after {
-  top: 0;
-  left: 0;
-  width: 25px;
-  height: 2px;
-  border: none;
-  background: white;
-  border-radius: 0%;
-  transform: rotate(-45deg);
-}
-.search-input::placeholder {
-  color: white;
-  opacity: 0.7;
-}
+    .container input {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60px;
+      height: 60px;
+      outline: none;
+      border: none;
+      background: #000;
+      color: #fff;
+      padding: 0 70px 0 20px;
+      border-radius: 30px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      transition: all 0.5s ease;
+      opacity: 0;
+      z-index: 5;
+      font-size: 16px;
+    }
+    .container input::placeholder {
+      color: #aaa;
+    }
+    .container input:focus {
+      width: 250px;
+      opacity: 1;
+      cursor: text;
+    }
+    .container input:focus ~ .search {
+      background: #000;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+    .container input:focus ~ .search::before {
+      width: 25px;
+      top: 0;
+      left: 0;
+    }
+    .container input:focus ~ .search::after {
+      width: 25px;
+      height: 2px;
+      top: 0;
+      left: 0;
+      border: none;
+      background: #fff;
+      transform: rotate(-45deg);
+    }
 
-/* 🎥 Catálogo */
-.catalogo {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    justify-items: center;
-}
-.card {
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.card img {
-    width: 150px;
-    height: 225px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(148,0,211,0.5);
-}
-.card h3 {
-    margin-top: 8px;
-    font-size: 14px;
-}
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px var(--neon1);
-}
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #111;
+      padding: 20px;
+      transition: left 0.3s ease;
+      z-index: 10;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar h2 {
+      margin-bottom: 15px;
+    }
+    .sidebar button {
+      display: block;
+      width: 100%;
+      background: #222;
+      border: none;
+      padding: 10px;
+      margin: 5px 0;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: left;
+    }
 
-/* 🎬 Modal player */
-.modal {
-    display: none;
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.95);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-.modal-content {
-    position: relative;
-    width: 90%;
-    max-width: 1200px;
-    height: 80%;
-    border-radius: 15px;
-    overflow: hidden;
-    background: var(--bg);
-}
-.modal iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 15px;
-}
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 40px;
-    color: var(--text);
-    cursor: pointer;
-}
-</style>
+    /* ===== BOTÕES TOPO ===== */
+    .controls {
+      padding: 15px;
+      display: flex;
+      gap: 10px;
+      background: #1f1f1f;
+    }
+    .controls button {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* ===== CARDS ===== */
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 20px;
+    }
+    .card {
+      width: 150px;
+      background: #222;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .card h3 {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* ===== MODAL ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+    }
+    .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      background: #000;
+    }
+    .modal iframe {
+      width: 100%;
+      height: 450px;
+    }
+    .close-btn {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      font-size: 30px;
+      cursor: pointer;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1></h1>FILMINHOS</h1>
-  <div class="search-container">
-    <input type="text" id="searchInput" class="search-input" placeholder="Pesquisar...">
-    <div class="search"></div>
-  </div>
-</header>
+  <header>
+    <h1>Filminhos</h1>
+    <div class="container">
+      <input type="text" id="searchInput" placeholder="Pesquisar...">
+      <div class="search"></div>
+    </div>
+  </header>
 
-<div class="catalogo" id="catalogo">
+  <div class="controls">
+    <button id="toggleSidebar">☰ Gêneros</button>
+    <button id="sortAZ">A - Z</button>
+    <button id="sortZA">Z - A</button>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+    <h2>Gêneros</h2>
+    <button data-genre="animação">Animação</button>
+    <button data-genre="ação">Ação</button>
+    <button data-genre="comédia">Comédia</button>
+    <button data-genre="terror">Terror</button>
+  </div>
+
+  <div class="grid" id="movieGrid">
     <div class="card" data-video-id="1W9J1EvIbuei7YkiILt33d00-7mvmvkjB"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPbrLOQ-dpJuOjte7dKTz1zmyo46SRqIwWrKsLsFJUEw&s" alt="CARROS"><h3>CARROS</h3></div>
 <div class="card" data-video-id="1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869"><img src="https://br.web.img3.acsta.net/r_1280_720/medias/nmedia/18/71/72/07/19770156.jpg" alt="CARROS 2"><h3>CARROS 2</h3></div>
 <div class="card" data-video-id="1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KrxJxQzJGNHzh-Aj21C94x-EbkjjOg62-p65S4-ICfbsMGR9It1XhPqR&s=10" alt="CARROS 3"><h3>CARROS 3</h3></div>
@@ -291,48 +313,89 @@ h1 {
 <div class="card" data-video-id="1wsVGR8kAjk5zvTaEgm1i8d6KYsxTU4as"><img src="https://i.pinimg.com/736x/a2/eb/88/a2eb8897ebe4ecb9da942b7d5a4f7488.jpg" alt="Vingadores"><h3>Vingadores</h3></div>
 <div class="card" data-video-id="1s8ZTUq2R7-eIr2dTWhzbYVsbJEp5HF2v"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5IazRW2YGJunPoAi6CCX09KplcvQcg7cHAA&s" alt="Vingadores 2"><h3>Vingadores 2</h3></div>
 <div class="card" data-video-id="144vcdiGLbR8T24DDt_W2OQNY-WECZYIW"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/harry-potter-e-a-pedra-filosofal/db9d9e76-866e-4725-ba3d-3a68ddd4589e.webp" alt="harry potter e a pedra filosofal"><h3>harry potter e a pedra filosofal</h3></div>
-</div>
-
-<div class="modal" id="videoModal">
-  <div class="modal-content">
-    <span class="close-btn" id="closeBtn">&times;</span>
-    <iframe id="videoFrame" src="" allow="autoplay" allowfullscreen></iframe>
   </div>
-</div>
 
-<script>
-const modal = document.getElementById('videoModal');
-const videoFrame = document.getElementById('videoFrame');
-const closeBtn = document.getElementById('closeBtn');
-const cards = document.querySelectorAll('.card');
+  <!-- Modal -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeBtn">&times;</span>
+      <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
 
-// Abrir modal com vídeo
-cards.forEach(card => {
-  card.addEventListener('click', () => {
-    const videoId = card.getAttribute('data-video-id');
-    videoFrame.src = `https://drive.google.com/file/d/${videoId}/preview`; 
-    modal.style.display = 'flex';
-  });
-});
+  <script>
+    const modal = document.getElementById('videoModal');
+    const videoFrame = document.getElementById('videoFrame');
+    const closeBtn = document.getElementById('closeBtn');
+    const cards = document.querySelectorAll('.card');
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebar = document.getElementById('toggleSidebar');
+    const searchInput = document.getElementById('searchInput');
+    const sortAZ = document.getElementById('sortAZ');
+    const sortZA = document.getElementById('sortZA');
+    const grid = document.getElementById('movieGrid');
 
-// Fechar modal
-function closeModal() {
-  modal.style.display = 'none';
-  videoFrame.src = '';
-}
-closeBtn.addEventListener('click', closeModal);
-modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-window.addEventListener('keydown', e => { if (e.key === "Escape") closeModal(); });
+    // Abrir modal
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const videoId = card.getAttribute('data-video-id');
+        videoFrame.src = `https://drive.google.com/file/d/${videoId}/preview`;
+        modal.style.display = 'flex';
+      });
+    });
 
-// 🔎 Filtro de pesquisa
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('keyup', () => {
-  let filter = searchInput.value.toLowerCase();
-  cards.forEach(card => {
-    let title = card.querySelector('h3').textContent.toLowerCase();
-    card.style.display = title.includes(filter) ? "block" : "none";
-  });
-});
-</script>
+    // Fechar modal
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      videoFrame.src = '';
+    });
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        videoFrame.src = '';
+      }
+    });
+
+    // Sidebar
+    toggleSidebar.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+
+    // Filtro por gênero
+    sidebar.querySelectorAll('button[data-genre]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const genre = btn.getAttribute('data-genre');
+        cards.forEach(card => {
+          if (card.getAttribute('data-genre') === genre || genre === "todos") {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Pesquisa
+    searchInput.addEventListener('keyup', () => {
+      let filter = searchInput.value.toLowerCase();
+      cards.forEach(card => {
+        let title = card.querySelector('h3').textContent.toLowerCase();
+        card.style.display = title.includes(filter) ? "block" : "none";
+      });
+    });
+
+    // Ordenação
+    function sortCards(order) {
+      let sorted = Array.from(cards).sort((a, b) => {
+        let t1 = a.getAttribute('data-title').toLowerCase();
+        let t2 = b.getAttribute('data-title').toLowerCase();
+        return order === "az" ? t1.localeCompare(t2) : t2.localeCompare(t1);
+      });
+      grid.innerHTML = "";
+      sorted.forEach(c => grid.appendChild(c));
+    }
+    sortAZ.addEventListener('click', () => sortCards("az"));
+    sortZA.addEventListener('click', () => sortCards("za"));
+  </script>
 </body>
 </html>

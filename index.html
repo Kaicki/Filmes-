@@ -5,37 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo de Filmes</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    body{
       margin: 0;
-      background: #111;
+      padding: 0;
+      background: #FF4654;
+      font-family: Arial, sans-serif;
       color: #fff;
     }
 
-    header {
-      padding: 20px;
-      background: #222;
-      text-align: center;
+    /* 🔎 Barra de Pesquisa */
+    .search-box{
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1C252E;
+      height: 50px;
+      border-radius: 50px;
+      padding: 12.5px;
+      display: flex;
+      align-items: center;
     }
 
-    #searchInput {
-      padding: 10px;
-      width: 90%;
-      max-width: 400px;
-      border-radius: 5px;
+    .search-button{
+      color: #FF4654;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #1C252E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.4s;
+      cursor: pointer;
+    }
+
+    .search-box:hover > .search-txt {
+      width: 300px;
+      padding: 0 7.5px;
+    }
+
+    .search-box:hover > .search-button {
+      background: #f1f1f1;
+    }
+
+    .search-txt{
       border: none;
-      font-size: 16px;
+      background: none;
+      outline:none;
+      float: left;
+      padding: 0;
+      color: #f1f1f1;
+      font-size: 20px;
+      transition: 0.4s;
+      line-height: 50px;
+      width: 0;
     }
 
+    /* Catálogo */
     .catalogo {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       gap: 15px;
-      padding: 20px;
+      padding: 100px 20px 20px; /* padding-top maior por causa da barra */
     }
 
     .card {
-      background: #1c1c1c;
+      background: #1C252E;
       border-radius: 8px;
       overflow: hidden;
       cursor: pointer;
@@ -104,24 +140,24 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>🎬 Catálogo de Filmes</h1>
-    <input type="text" id="searchInput" placeholder="Pesquisar filme...">
-  </header>
 
-  <main>
-    <div class="catalogo" id="catalogo">
-      <!-- TODOS OS CARDS QUE VOCÊ ENVIOU -->
-      <!-- Exemplo: -->
-      <div class="card" data-video-id="1W9J1EvIbuei7YkiILt33d00-7mvmvkjB"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPbrLOQ-dpJuOjte7dKTz1zmyo46SRqIwWrKsLsFJUEw&s" alt="CARROS"><h3>CARROS</h3></div>
-      <div class="card" data-video-id="1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869"><img src="https://br.web.img3.acsta.net/r_1280_720/medias/nmedia/18/71/72/07/19770156.jpg" alt="CARROS 2"><h3>CARROS 2</h3></div>
-      <div class="card" data-video-id="1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KrxJxQzJGNHzh-Aj21C94x-EbkjjOg62-p65S4-ICfbsMGR9It1XhPqR&s=10" alt="CARROS 3"><h3>CARROS 3</h3></div>
-      <!-- 🔻 Aqui você cola todos os outros cards que me mandou 🔻 -->
-      <!-- ... -->
-    </div>
-  </main>
+  <!-- 🔎 Barra de Pesquisa -->
+  <div class="search-box">
+    <input type="text" class="search-txt" id="searchInput" placeholder="Pesquisar filme...">
+    <a class="search-button">🔍</a>
+  </div>
 
-  <!-- Modal para player -->
+  <!-- Catálogo de filmes -->
+  <div class="catalogo" id="catalogo">
+    <!-- Exemplo de cards (adicione todos os seus aqui) -->
+    <div class="card" data-video-id="1W9J1EvIbuei7YkiILt33d00-7mvmvkjB"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPbrLOQ-dpJuOjte7dKTz1zmyo46SRqIwWrKsLsFJUEw&s" alt="CARROS"><h3>CARROS</h3></div>
+    <div class="card" data-video-id="1HqqJ5QlxKOmrrQi5wlWlbdkxNcc1e869"><img src="https://br.web.img3.acsta.net/r_1280_720/medias/nmedia/18/71/72/07/19770156.jpg" alt="CARROS 2"><h3>CARROS 2</h3></div>
+    <div class="card" data-video-id="1vO0GuhCuCBjfLlt5FcXWMclPw5sp8vJG"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6KrxJxQzJGNHzh-Aj21C94x-EbkjjOg62-p65S4-ICfbsMGR9It1XhPqR&s=10" alt="CARROS 3"><h3>CARROS 3</h3></div>
+    <div class="card" data-video-id="144vcdiGLbR8T24DDt_W2OQNY-WECZYIW"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/harry-potter-e-a-pedra-filosofal/db9d9e76-866e-4725-ba3d-3a68ddd4589e.webp" alt="harry potter e a pedra filosofal"><h3>harry potter e a pedra filosofal</h3></div>
+    <!-- Cole todos os outros cards aqui -->
+  </div>
+
+  <!-- Modal -->
   <div id="modal" class="modal">
     <div class="modal-content">
       <button class="close">&times;</button>
@@ -157,7 +193,7 @@
       }
     });
 
-    // Sistema de pesquisa
+    // 🔎 Sistema de pesquisa
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('keyup', () => {
       const filter = searchInput.value.toLowerCase();

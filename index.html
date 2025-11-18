@@ -387,9 +387,30 @@
       catalogo.innerHTML = '';
       cardsArray.forEach(card => catalogo.appendChild(card));
 
-      ascending = !ascending;
-      sortButton.textContent = ascending ? "🔤 Ordenar A-Z" : "🔤 Ordenar Z-A";
-    });
-  </script>
+// Ordenação
+function sortCards(order) {
+  let cardsArray = Array.from(document.querySelectorAll('.card')); // pega de novo
+  let sorted = cardsArray.sort((a, b) => {
+    let t1 = a.getAttribute('data-title').toLowerCase();
+    let t2 = b.getAttribute('data-title').toLowerCase();
+    return order === "az" ? t1.localeCompare(t2) : t2.localeCompare(t1);
+  });
+  grid.innerHTML = "";
+  sorted.forEach(c => grid.appendChild(c));
+}
+
+sortAZ.addEventListener('click', () => sortCards("az"));
+sortZA.addEventListener('click', () => sortCards("za"));
+    
+// 🔎 Filtro de pesquisa
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('keyup', () => {
+  let filter = searchInput.value.toLowerCase();
+  cards.forEach(card => {
+    let title = card.querySelector('h3').textContent.toLowerCase();
+    card.style.display = title.includes(filter) ? "block" : "none";
+  });
+});
+</script>
 </body>
         </html>

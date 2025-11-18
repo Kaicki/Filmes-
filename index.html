@@ -327,24 +327,31 @@
       <iframe id="videoFrame" allowfullscreen></iframe>
     </div>
   </div>
-
-  <script>
-    // Abrir modal ao clicar em card
+<script>
+    // 1. Variáveis Globais
     const cards = document.querySelectorAll('.card');
     const modal = document.getElementById('modal');
     const videoFrame = document.getElementById('videoFrame');
     const closeBtn = document.querySelector('.close');
     const catalogo = document.getElementById('catalogo');
+    const searchInput = document.getElementById('searchInput');
+    const sortButton = document.getElementById('sortButton');
+    
+    // Estado de ordenação: true para A-Z (ascendente)
+    let ascending = true; 
 
+    // 2. Abrir Modal
     cards.forEach(card => {
       card.addEventListener('click', () => {
         const videoId = card.getAttribute('data-video-id');
-        const videoUrl = `https://drive.google.com/file/d/${videoId}/preview`;
+        // Usando o novo iframe do Google Drive, se o ID for do Drive (longo)
+        const videoUrl = `https://drive.google.com/file/d/${videoId}/preview`; 
         videoFrame.src = videoUrl;
         modal.style.display = 'flex';
       });
     });
 
+    // 3. Fechar Modal
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
       videoFrame.src = '';
@@ -357,60 +364,43 @@
       }
     });
 
-    // 🔎 Sistema de pesquisa
-    const searchInput = document.getElementById('searchInput');
+    // 4. Sistema de Pesquisa
     searchInput.addEventListener('keyup', () => {
       const filter = searchInput.value.toLowerCase();
-      const cards = document.querySelectorAll('.card');
-
+      
       cards.forEach(card => {
         const title = card.querySelector('h3').textContent.toLowerCase();
         if (title.includes(filter)) {
-          card.style.display = '';
+          card.style.display = 'block'; // Exibe o card
         } else {
-          card.style.display = 'none';
+          card.style.display = 'none'; // Esconde o card
         }
       });
     });
 
-    // 🔤 Ordenar A-Z e Z-A
-    const sortButton = document.getElementById('sortButton');
-    let ascending = true;
+    // 5. Sistema de Ordenação Otimizado
     sortButton.addEventListener('click', () => {
       const cardsArray = Array.from(document.querySelectorAll('.card'));
+      
       cardsArray.sort((a, b) => {
         const titleA = a.querySelector('h3').textContent.toLowerCase();
         const titleB = b.querySelector('h3').textContent.toLowerCase();
+        
+        // Compara os títulos com base no estado 'ascending'
         return ascending ? titleA.localeCompare(titleB) : titleB.localeCompare(titleA);
       });
 
+      // Limpa e reinsere os cards no catálogo na nova ordem
       catalogo.innerHTML = '';
       cardsArray.forEach(card => catalogo.appendChild(card));
+      
+      // Inverte o estado de ordenação para o próximo clique
+      ascending = !ascending;
+      
+      // Atualiza o texto do botão
+      sortButton.textContent = ascending ? '🔤 Ordenar A-Z' : '🔤 Ordenar Z-A';
+    });
 
-// Ordenação
-function sortCards(order) {
-  let cardsArray = Array.from(document.querySelectorAll('.card')); // pega de novo
-  let sorted = cardsArray.sort((a, b) => {
-    let t1 = a.getAttribute('data-title').toLowerCase();
-    let t2 = b.getAttribute('data-title').toLowerCase();
-    return order === "az" ? t1.localeCompare(t2) : t2.localeCompare(t1);
-  });
-  grid.innerHTML = "";
-  sorted.forEach(c => grid.appendChild(c));
-}
-
-sortAZ.addEventListener('click', () => sortCards("az"));
-sortZA.addEventListener('click', () => sortCards("za"));
-    
-// 🔎 Filtro de pesquisa
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('keyup', () => {
-  let filter = searchInput.value.toLowerCase();
-  cards.forEach(card => {
-    let title = card.querySelector('h3').textContent.toLowerCase();
-    card.style.display = title.includes(filter) ? "block" : "none";
-  });
-});
 </script>
 </body>
         </html>
